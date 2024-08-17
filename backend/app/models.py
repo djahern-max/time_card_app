@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Enum as SQLAEnum
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum
 from sqlalchemy.orm import relationship
 from .database import Base
-from datetime import datetime
 import enum
 
 class UserRole(enum.Enum):
@@ -17,18 +16,41 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     role = Column(SQLAEnum(UserRole), default=UserRole.general)  # Correct usage of SQLAEnum
 
-    timecards = relationship("Timecard", back_populates="user")
+    mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
+    daily_time_reports = relationship("DailyTimeReport", back_populates="user")
 
-class Timecard(Base):
-    __tablename__ = "timecards"
+class MechanicsTimeReport(Base):
+    __tablename__ = "mechanics_time_reports"
+
     id = Column(Integer, primary_key=True, index=True)
-    date = Column(DateTime, default=datetime.utcnow)
-    hours_worked = Column(Integer, nullable=False)
-    job_name = Column(String, nullable=False)
+    name = Column(String, index=True)
+    date = Column(Date)
+    hours_worked = Column(Integer)
+    equipment = Column(String)
+    equipment_number = Column(String)
+    cost_category = Column(String)
+    work_order_number = Column(String)
     description = Column(String)
-    equipment_used = Column(String)
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    user = relationship("User", back_populates="timecards")
+    user = relationship("User", back_populates="mechanics_time_reports")
+
+class DailyTimeReport(Base):
+    __tablename__ = "daily_time_reports"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    date = Column(Date)
+    hours_worked = Column(Integer)
+    job_name = Column(String)
+    description = Column(String)
+    equipment = Column(String)
+    loads = Column(String)
+    pit = Column(String)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="daily_time_reports")
+
+
 
 

@@ -1,4 +1,15 @@
-.container {
+/* MechanicsTimeReport.css */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2; /* Optional: to match background color of the login page */
+}
+
+.mechanics-form-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -7,25 +18,32 @@
   background-color: #f9f9f9;
 }
 
-h1 {
+.mechanics-form h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-label {
+.mechanics-form label {
   display: block;
   margin-bottom: 5px;
 }
 
-input {
+.mechanics-form input,
+.mechanics-form textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  box-sizing: border-box; /* Ensures padding is included within the element's width */
 }
 
-button {
+.mechanics-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.mechanics-form button {
   width: 100%;
   padding: 10px;
   background-color: #4caf50;
@@ -33,13 +51,14 @@ button {
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  font-size: 16px;
 }
 
-button:hover {
+.mechanics-form button:hover {
   background-color: #45a049;
 }
 
-.error {
+.mechanics-form .error {
   color: red;
   margin-bottom: 10px;
   text-align: center;

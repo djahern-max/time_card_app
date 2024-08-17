@@ -1,124 +1,101 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./MechanicsTimeReport.css"; // Import the CSS file
 
 function MechanicsTimeReport() {
   const [formData, setFormData] = useState({
-    date: "",
     name: "",
-    equipmentUsed: "",
-    costCode: "",
-    workOrder: "",
+    date: "",
+    hours_worked: "",
+    equipment: "",
+    equipment_number: "",
+    cost_category: "",
+    work_order_number: "",
     description: "",
-    totalHours: "",
   });
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/timecards/mechanics",
-        formData
-      );
-      if (response.status === 200) {
-        navigate("/success");
-      }
-    } catch (err) {
-      setError("Failed to submit the report. Please try again.");
-    }
+    axios
+      .post("http://127.0.0.1:8000/timecards/mechanics", formData)
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error("Error:", error));
   };
 
   return (
-    <div className="container">
-      <h1>Mechanics Time Report</h1>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="equipmentUsed">Equipment Used</label>
-          <input
-            type="text"
-            id="equipmentUsed"
-            name="equipmentUsed"
-            value={formData.equipmentUsed}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="costCode">Cost Code</label>
-          <input
-            type="text"
-            id="costCode"
-            name="costCode"
-            value={formData.costCode}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="workOrder">Work Order #</label>
-          <input
-            type="text"
-            id="workOrder"
-            name="workOrder"
-            value={formData.workOrder}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="totalHours">Total Hours</label>
-          <input
-            type="number"
-            id="totalHours"
-            name="totalHours"
-            value={formData.totalHours}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
+    <div className="mechanics-form-container">
+      <form className="mechanics-form" onSubmit={handleSubmit}>
+        <h1>Mechanics Time Report</h1>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Name"
+          className="form-input"
+        />
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          placeholder="Date"
+          className="form-input"
+        />
+        <input
+          type="number"
+          name="hours_worked"
+          value={formData.hours_worked}
+          onChange={handleChange}
+          placeholder="Hours Worked"
+          className="form-input"
+        />
+        <input
+          type="text"
+          name="equipment"
+          value={formData.equipment}
+          onChange={handleChange}
+          placeholder="Equipment"
+          className="form-input"
+        />
+        <input
+          type="text"
+          name="equipment_number"
+          value={formData.equipment_number}
+          onChange={handleChange}
+          placeholder="Equipment Number"
+          className="form-input"
+        />
+        <input
+          type="text"
+          name="cost_category"
+          value={formData.cost_category}
+          onChange={handleChange}
+          placeholder="Cost Category"
+          className="form-input"
+        />
+        <input
+          type="text"
+          name="work_order_number"
+          value={formData.work_order_number}
+          onChange={handleChange}
+          placeholder="Work Order Number"
+          className="form-input"
+        />
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Description"
+          className="form-textarea"
+        />
+        <button type="submit" className="form-button">
+          Submit
+        </button>
       </form>
     </div>
   );
