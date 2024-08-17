@@ -1,0 +1,78 @@
+/* GeneralTimeReport.css */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Light grey background */
+  font-family: Arial, sans-serif;
+}
+
+.general-form-container {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 10px;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.general-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.general-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px; /* Slightly larger font for the heading */
+  color: #333333;
+}
+
+.general-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555555;
+}
+
+.general-form input,
+.general-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd; /* Light grey border for inputs */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #f9f9f9; /* Slightly lighter background inside the inputs */
+}
+
+.general-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.general-form button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.general-form button:hover {
+  background-color: #0056b3;
+}
+
+.general-form .error {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+}

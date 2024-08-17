@@ -13,7 +13,7 @@ def create_mechanics_time_report(report: schemas.MechanicsTimecardCreate, db: Se
     db.refresh(db_report)
     return db_report
 
-@router.post("/timecards/daily", response_model=schemas.DailyTimeReport)
+@router.post("/timecards/general", response_model=schemas.DailyTimeReport)
 def create_daily_time_report(report: schemas.DailyTimecardCreate, db: Session = Depends(get_db)):
     db_report = models.DailyTimeReport(**report.dict())
     db.add(db_report)
