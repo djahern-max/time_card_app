@@ -1,14 +1,21 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Enum as SQLAEnum
 from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import datetime
+import enum
+
+class UserRole(enum.Enum):
+    mechanic = "mechanic"
+    general = "general"
 
 class User(Base):
     __tablename__ = "users"
+
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
+    role = Column(SQLAEnum(UserRole), default=UserRole.general)  # Correct usage of SQLAEnum
 
     timecards = relationship("Timecard", back_populates="user")
 

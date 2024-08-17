@@ -1,6 +1,12 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
+from enum import Enum
+
+# Enum for User Roles
+class UserRole(str, Enum):
+    general = "general"
+    mechanic = "mechanic"
 
 # User Schemas
 class UserBase(BaseModel):
@@ -8,10 +14,12 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    role: Optional[UserRole] = UserRole.general  # Optional role with a default value
 
 class User(UserBase):
     id: int
-    is_active: Optional[bool] = None  # Made optional to avoid issues if not provided in the response
+    is_active: Optional[bool] = None
+    role: UserRole  # Role field to store the user's role
 
     class Config:
         from_attributes = True
@@ -19,16 +27,6 @@ class User(UserBase):
 # New class to include the access token in the response
 class UserWithToken(User):
     access_token: str
-
-# Token Schema for login response
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-# Login Schema
-class Login(BaseModel):
-    username: str
-    password: str
 
 # Timecard Schemas
 class TimecardBase(BaseModel):
@@ -47,6 +45,20 @@ class Timecard(TimecardBase):
 
     class Config:
         from_attributes = True
+
+# Mechanics Timecard Schema
+class MechanicsTimecardCreate(TimecardBase):
+    additional_mechanic_field: Optional[str] = None  # Example additional field for mechanics
+
+    class Config:
+        from_attributes = True
+
+# Token schema
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
 
 
 
