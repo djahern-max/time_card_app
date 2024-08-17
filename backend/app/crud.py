@@ -15,4 +15,5 @@ def create_daily_timecard(db: Session, timecard: schemas.DailyTimecardCreate, us
     db.refresh(db_timecard)
     return db_timecard
 
-
+def get_user_by_username(db: Session, username: str):
+    return db.query(models.User).filter(models.User.username == username).first()

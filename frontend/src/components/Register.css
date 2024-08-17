@@ -3,49 +3,48 @@ body {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Light background for the page */
 }
 
 .container {
   width: 300px;
   margin: auto;
   padding: 20px;
+  background-color: white; /* White background for the container */
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center; /* Center align the text */
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333; /* Darker color for the header text */
+  font-size: 24px;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
+  color: #333; /* Darker color for the label text */
 }
 
 input[type="text"],
 input[type="password"],
 select {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-select {
-  padding: 8px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  font-size: 16px;
 }
 
 button[type="submit"] {
@@ -66,4 +65,19 @@ button[type="submit"]:hover {
 .error {
   color: red;
   margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
 }
