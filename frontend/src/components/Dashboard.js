@@ -16,7 +16,7 @@ function Dashboard() {
     }
 
     axios
-      .get(`${API_URL}/user/me`, {
+      .get(`${API_URL}/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

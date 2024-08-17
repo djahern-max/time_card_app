@@ -46,5 +46,10 @@ def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = 
     access_token = oauth2.create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
+# Get Current User Endpoint
+@router.get("/users/me", response_model=schemas.User)
+def get_me(current_user: schemas.User = Depends(oauth2.get_current_user)):
+    return current_user
+
 
 
