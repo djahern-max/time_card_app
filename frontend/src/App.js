@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
-import DailyTimeReport from "./components/DailyTimeReport";
-import MechanicsTimeReport from "./components/MechanicsTimeReport";
-import Upload from "./components/Upload"; // Import the new Upload component
+import LandingPage from "./components/LandingPage/LandingPage";
+import Login from "./components/Authentication/Login";
+import Register from "./components/Authentication/Register";
+import Dashboard from "./components/Dashboard/Dashboard";
+import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
+import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
+import Upload from "./components/Upload/Upload"; // Updated path for Upload component
 
 function App() {
   return (

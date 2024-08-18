@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./LandingPage.css"; // We'll define the styles here
-import logo from "../assets/1.webp"; // Assuming the logo is in the assets folder
+import logo from "../../assets/1.webp"; // Assuming the logo is in the assets folder
 
 const LandingPage = () => {
   return (
