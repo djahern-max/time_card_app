@@ -88,14 +88,12 @@ class DailyTimeReport(BaseModel):
     hours_worked: int
     job_name: str
     description: Optional[str] = None
-    phase_number: str
     equipment: str
     loads: str
     pit: str
 
     class Config:
         from_attributes = True
-
 
 
 

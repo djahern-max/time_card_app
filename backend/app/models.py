@@ -44,7 +44,6 @@ class DailyTimeReport(Base):
     hours_worked = Column(Integer)
     job_name = Column(String)
     description = Column(String)
-    phase_number = Column(String)
     equipment = Column(String)
     loads = Column(String)
     pit = Column(String)

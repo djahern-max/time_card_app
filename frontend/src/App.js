@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import DailyTimeReport from "./components/DailyTimeReport";
 import MechanicsTimeReport from "./components/MechanicsTimeReport";
+import Upload from "./components/Upload"; // Import the new Upload component
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           path="/mechanics-time-report"
           element={<MechanicsTimeReport />}
         />
+        <Route path="/upload" element={<Upload />} /> {/* Add the new route */}
       </Routes>
     </Router>
   );

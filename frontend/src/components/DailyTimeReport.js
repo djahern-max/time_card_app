@@ -9,7 +9,6 @@ function GeneralTimeReport() {
     hours_worked: "",
     job_name: "",
     description: "",
-    phase_number: "",
     equipment: "",
     loads: "",
     pit: "",
@@ -24,8 +23,14 @@ function GeneralTimeReport() {
     e.preventDefault();
     axios
       .post("http://127.0.0.1:8000/timecards/general", formData)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error("Error:", error));
+      .then((response) => {
+        console.log(response.data);
+        alert("Form submitted successfully!");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("There was an error submitting the form. Please try again.");
+      });
   };
 
   return (
@@ -64,20 +69,12 @@ function GeneralTimeReport() {
           placeholder="Job Name"
           className="form-input"
         />
-        <input
+        <textarea
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Description"
+          placeholder="Provide Phase # if Known.  If not provide description of work performed."
           className="form-textarea"
-        />
-        <input
-          type="text"
-          name="phase_number"
-          value={formData.phase_number}
-          onChange={handleChange}
-          placeholder="Phase Number"
-          className="form-input"
         />
         <input
           type="text"
