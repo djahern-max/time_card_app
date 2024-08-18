@@ -16,40 +16,23 @@ function Login() {
       const response = await login(username, password);
       if (response.data.access_token) {
         localStorage.setItem("token", response.data.access_token);
-
-        // Assuming the backend sends the role in the response
+        localStorage.setItem("role", response.data.role); // Store the role
         const role = response.data.role;
-        localStorage.setItem("role", role);
+        console.log("User role:", role);
 
-        // Debugging: Log the user role
-        console.log("User role:", localStorage.getItem("role"));
-
-        // Debugging: Log the navigation path based on the role
-        console.log(
-          "Navigating to:",
-          role === "admin"
-            ? "/dashboard"
-            : role === "mechanic"
-            ? "/mechanics-time-report"
-            : "/daily-time-report"
-        );
-
-        // Navigate based on the user's role
+        // Navigate based on role
         if (role === "admin") {
           navigate("/dashboard");
         } else if (role === "mechanic") {
           navigate("/mechanics-time-report");
-        } else if (role === "general") {
-          navigate("/daily-time-report");
         } else {
-          setError("Unknown user role.");
+          navigate("/daily-time-report");
         }
       }
     } catch (err) {
       setError("Login failed. Please check your username and password.");
     }
   };
-
   return (
     <div className="container">
       <h1>Login</h1>

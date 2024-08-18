@@ -16,6 +16,8 @@ import Upload from "./components/Upload/Upload";
 function App() {
   const role = localStorage.getItem("role");
 
+  console.log("App role:", role); // Debugging line
+
   return (
     <Router>
       <Routes>
