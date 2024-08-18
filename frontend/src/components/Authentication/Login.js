@@ -14,18 +14,27 @@ function Login() {
     e.preventDefault();
     try {
       const response = await login(username, password);
+
       if (response.data.access_token) {
+        // Clear previous values from localStorage
+        localStorage.clear();
+
+        // Store the new token and role in localStorage
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("role", response.data.role); // Store the role
+
         const role = response.data.role;
         console.log("User role:", role);
 
         // Navigate based on role
         if (role === "admin") {
+          console.log("Navigating to Admin Dashboard");
           navigate("/dashboard");
         } else if (role === "mechanic") {
+          console.log("Navigating to Mechanics Time Report");
           navigate("/mechanics-time-report");
         } else {
+          console.log("Navigating to Daily Time Report");
           navigate("/daily-time-report");
         }
       }

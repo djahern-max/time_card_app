@@ -24,25 +24,11 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/dashboard"
-          element={role === "admin" ? <Dashboard /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/daily-time-report"
-          element={
-            role === "general" ? <DailyTimeReport /> : <Navigate to="/login" />
-          }
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/daily-time-report" element={<DailyTimeReport />} />
         <Route
           path="/mechanics-time-report"
-          element={
-            role === "mechanic" ? (
-              <MechanicsTimeReport />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={<MechanicsTimeReport />}
         />
         <Route path="/upload" element={<Upload />} />
       </Routes>
