@@ -1,5 +1,6 @@
 // src/components/Upload.js
 import React, { useState } from "react";
+import "./upload.css";
 
 function Upload() {
   const [file, setFile] = useState(null);
@@ -30,10 +31,12 @@ function Upload() {
   };
 
   return (
-    <div>
-      <h2>Upload Employee Data</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+    <div className="upload-container">
+      <div className="upload-box">
+        <h2>Upload Employee Data</h2>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
     </div>
   );
 }
