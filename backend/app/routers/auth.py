@@ -32,8 +32,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
         "access_token": token
     }
 
-# Login Endpoint
-@router.post("/login", response_model=schemas.Token)
+@router.post("/login", response_model=schemas.UserWithToken)
 def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
     user = db.query(models.User).filter(models.User.username == form_data.username).first()
     if not user or not verify_password(form_data.password, user.hashed_password):
@@ -44,12 +43,19 @@ def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = 
         )
 
     access_token = oauth2.create_access_token(data={"sub": user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
-
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "username": user.username,  # Include username in the response
+        "id": user.id,              # Include id in the response
+        "is_active": user.is_active,
+        "role": user.role           # Include role in the response
+    }
 # Get Current User Endpoint
 @router.get("/users/me", response_model=schemas.User)
 def get_me(current_user: schemas.User = Depends(oauth2.get_current_user)):
     return current_user
+
 
 
 

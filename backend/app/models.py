@@ -6,6 +6,7 @@ import enum
 class UserRole(enum.Enum):
     mechanic = "mechanic"
     general = "general"
+    admin = "admin"
 
 class User(Base):
     __tablename__ = "users"
@@ -14,7 +15,7 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
-    role = Column(SQLAEnum(UserRole), default=UserRole.general)  # Correct usage of SQLAEnum
+    role = Column(SQLAEnum(UserRole), default=UserRole.general)
 
     mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
     daily_time_reports = relationship("DailyTimeReport", back_populates="user")
@@ -50,6 +51,7 @@ class DailyTimeReport(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="daily_time_reports")
+
 
 
 

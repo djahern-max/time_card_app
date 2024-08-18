@@ -7,6 +7,7 @@ from enum import Enum
 class UserRole(str, Enum):
     general = "general"
     mechanic = "mechanic"
+    admin = "admin"
 
 # User Schemas
 class UserBase(BaseModel):
@@ -94,6 +95,7 @@ class DailyTimeReport(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 
 
