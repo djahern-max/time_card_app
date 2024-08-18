@@ -9,6 +9,7 @@ function GeneralTimeReport() {
     hours_worked: "",
     job_name: "",
     description: "",
+    phase_number: "",
     equipment: "",
     loads: "",
     pit: "",
@@ -63,12 +64,20 @@ function GeneralTimeReport() {
           placeholder="Job Name"
           className="form-input"
         />
-        <textarea
+        <input
           name="description"
           value={formData.description}
           onChange={handleChange}
           placeholder="Description"
           className="form-textarea"
+        />
+        <input
+          type="text"
+          name="phase_number"
+          value={formData.phase_number}
+          onChange={handleChange}
+          placeholder="Phase Number"
+          className="form-input"
         />
         <input
           type="text"
