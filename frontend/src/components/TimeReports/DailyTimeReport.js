@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./GeneralTimeReport.css"; // Import the CSS file
 
@@ -14,6 +15,13 @@ function GeneralTimeReport() {
     pit: "",
     user_id: "", // Assuming the user_id is provided by the logged-in user context
   });
+
+  const navigate = useNavigate(); // Define useNavigate
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    navigate("/login"); // Redirect to the login page
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,6 +43,9 @@ function GeneralTimeReport() {
 
   return (
     <div className="general-form-container">
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
       <form className="general-form" onSubmit={handleSubmit}>
         <h1>Daily Time Report</h1>
         <input

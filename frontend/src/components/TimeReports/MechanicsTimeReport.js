@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./MechanicsTimeReport.css"; // Import the CSS file
 
@@ -14,6 +15,13 @@ function MechanicsTimeReport() {
     description: "",
   });
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    navigate("/login"); // Redirect to the login page
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,6 +36,9 @@ function MechanicsTimeReport() {
 
   return (
     <div className="mechanics-form-container">
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
       <form className="mechanics-form" onSubmit={handleSubmit}>
         <h1>Mechanics Time Report</h1>
         <input
