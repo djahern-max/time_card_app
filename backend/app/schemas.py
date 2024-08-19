@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 from enum import Enum
+from datetime import date
+
 
 # Enum for User Roles
 class UserRole(str, Enum):
@@ -116,5 +118,39 @@ class Equipment(EquipmentBase):
         from_attributes = True
 
 
+class EmployeeBase(BaseModel):
+    emp_code: str
+    name: str
+    street_address: Optional[str] = None
+    town: Optional[str] = None
+    zip: Optional[str] = None
+    hire_date: Optional[date] = None
+    marital_status: Optional[str] = None
+    comp_code: Optional[str] = None
+    general_department: Optional[str] = None
+    department: Optional[str] = None
+    department_code: Optional[str] = None
+    phone_number: Optional[str] = None
+    hourly_salary: Optional[float] = None
+    pay_type_code: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    title: Optional[str] = None
+    pay_rate: Optional[float] = None
+    username: Optional[str] = None
+    password: Optional[str] = None
+    role: Optional[str] = None
 
+    class Config:
+        from_attributes = True
+
+# Schema for creating an employee (includes all fields)
+class EmployeeCreate(EmployeeBase):
+    pass
+
+# Schema for returning an employee from the database (includes the ID)
+class Employee(EmployeeBase):
+    id: int
+
+    class Config:
+        from_attributes = True
 

@@ -16,10 +16,21 @@ function Upload() {
   const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("dataset", dataset); // Add dataset type to the form data
+
+    let url;
+
+    // Determine the URL based on the selected dataset
+    if (dataset === "employees") {
+      url = `http://127.0.0.1:8000/upload/?dataset=${dataset}`;
+    } else if (dataset === "equipment") {
+      url = `http://127.0.0.1:8000/upload/equipment/?dataset=${dataset}`;
+    } else {
+      alert("Unsupported dataset");
+      return;
+    }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/upload/", {
+      const response = await fetch(url, {
         method: "POST",
         body: formData,
       });

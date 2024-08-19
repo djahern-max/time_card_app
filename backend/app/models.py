@@ -72,3 +72,26 @@ class Equipment(Base):
 
 
 
+class Employee(Base):
+    __tablename__ = "employees"
+
+    emp_code = Column(String, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    street_address = Column(String, nullable=False)
+    town = Column(String, nullable=False)
+    zip = Column(String, nullable=False)
+    hire_date = Column(Date, nullable=False)
+    marital_status = Column(String, nullable=False)
+    comp_code = Column(String, nullable=False)
+    general_department = Column(String, nullable=False)
+    department = Column(String, nullable=False)
+    department_code = Column(String, nullable=False)
+    phone_number = Column(String, nullable=False)
+    hourly_salary = Column(String, nullable=False)
+    pay_type_code = Column(String, nullable=False)
+    date_of_birth = Column(Date, nullable=False)
+    title = Column(String, nullable=False)
+    pay_rate = Column(String, nullable=False)
+    username = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    role = Column(String, nullable=False)

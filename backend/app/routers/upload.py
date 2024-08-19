@@ -110,3 +110,43 @@ async def upload_equipment(file: UploadFile = File(...), db: Session = Depends(g
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=400, detail=str(e))
+
+@router.post("/upload/employees/")
+async def upload_employees(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    try:
+        contents = await file.read()
+        decoded_content = contents.decode('utf-8')
+        csv_reader = csv.DictReader(StringIO(decoded_content))
+
+        for row in csv_reader:
+            employee = models.Employee(
+                emp_code=row['emp_code'].strip(),
+                name=row['name'].strip(),
+                street_address=row['street_address'].strip(),
+                town=row['town'].strip(),
+                zip=row['zip'].strip(),
+                hire_date=row['hire_date'].strip(),
+                marital_status=row['marital_status'].strip(),
+                comp_code=row['comp_code'].strip(),
+                general_department=row['general_department'].strip(),
+                department=row['department'].strip(),
+                department_code=row['department_code'].strip(),
+                phone_number=row['phone_number'].strip(),
+                hourly_salary=float(row['hourly_salary']),
+                pay_type_code=row['pay_type_code'].strip(),
+                date_of_birth=row['date_of_birth'].strip(),
+                title=row['title'].strip(),
+                pay_rate=float(row['pay_rate']),
+                username=row['username'].strip(),
+                password=row['password'].strip(),
+                role=row['role'].strip()
+            )
+            db.add(employee)
+        
+        db.commit()
+
+        return {"filename": file.filename, "status": "success"}
+    except Exception as e:
+        db.rollback()
+        logging.error(f"Error occurred: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))

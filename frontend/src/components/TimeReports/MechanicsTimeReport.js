@@ -30,8 +30,14 @@ function MechanicsTimeReport() {
     e.preventDefault();
     axios
       .post("http://127.0.0.1:8000/timecards/mechanics", formData)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error("Error:", error));
+      .then((response) => {
+        console.log(response.data);
+        alert("Time card submitted successfully!");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Failed to submit time card. Please try again.");
+      });
   };
 
   return (
