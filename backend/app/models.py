@@ -95,3 +95,18 @@ class Employee(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     role = Column(String, nullable=False)
+
+# Timecard Model
+class Timecard(Base):
+    __tablename__ = "timecards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    emp_code = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
+    hours_worked = Column(Integer, nullable=False)
+    rate = Column(String, nullable=False)
+    extension = Column(String, nullable=True)
+    department = Column(String, nullable=False)
+    job = Column(String, nullable=False)
+    phase = Column(String, nullable=False)

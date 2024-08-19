@@ -24,6 +24,10 @@ function Upload() {
       url = `http://127.0.0.1:8000/upload/?dataset=${dataset}`;
     } else if (dataset === "equipment") {
       url = `http://127.0.0.1:8000/upload/equipment/?dataset=${dataset}`;
+    } else if (dataset === "timecards") {
+      url = `http://127.0.0.1:8000/upload/timecards/?dataset=${dataset}`;
+    } else if (dataset === "jobs") {
+      url = `http://127.0.0.1:8000/upload/jobs/?dataset=${dataset}`;
     } else {
       alert("Unsupported dataset");
       return;
@@ -54,6 +58,7 @@ function Upload() {
           <option value="employees">Employees</option>
           <option value="jobs">Jobs</option>
           <option value="equipment">Equipment</option>
+          <option value="timecards">Timecards</option>{" "}
         </select>
         <input type="file" onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>

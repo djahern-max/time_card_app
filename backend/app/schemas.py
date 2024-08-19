@@ -154,3 +154,28 @@ class Employee(EmployeeBase):
     class Config:
         from_attributes = True
 
+# Base Schemas for Timecards
+class TimecardBase(BaseModel):
+    emp_code: str
+    name: str
+    date: date
+    hours_worked: int
+    rate: float
+    extension: Optional[str] = None
+    department: str
+    job: str
+    phase: str
+
+    class Config:
+        from_attributes = True
+
+# Timecard Schemas
+class TimecardCreate(TimecardBase):
+    pass
+
+class Timecard(TimecardBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+

@@ -31,6 +31,8 @@ async def upload_file(file: UploadFile = File(...), dataset: str = Query(..., de
             table_name = 'jobs'
         elif dataset == 'equipment':
             table_name = 'equipment'
+        elif dataset == 'timecards':
+            table_name = 'timecards'
         else:
             raise HTTPException(status_code=400, detail="Invalid dataset type")
 
@@ -146,6 +148,45 @@ async def upload_employees(file: UploadFile = File(...), db: Session = Depends(g
         db.commit()
 
         return {"filename": file.filename, "status": "success"}
+    except Exception as e:
+        db.rollback()
+        logging.error(f"Error occurred: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
+    
+@router.post("/upload/timecards/")
+async def upload_timecards(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    try:
+        contents = await file.read()
+        df = pd.read_csv(StringIO(contents.decode('utf-8')))
+        
+        # Convert all columns to strings to handle any potential formatting issues
+        df = df.astype(str)
+
+        # Strip any leading/trailing whitespace from each field
+        df = df.applymap(str.strip)
+
+        # Ensure `hours_worked` is converted to an integer
+        df['hours_worked'] = df['hours_worked'].astype(float).astype(int)
+
+        # Iterate through the DataFrame and insert each row into the database
+        for _, row in df.iterrows():
+            timecard = models.Timecard(
+                emp_code=row['emp_code'],
+                name=row['name'],
+                date=row['date'],
+                hours_worked=row['hours_worked'],  # Now an integer
+                rate=row['rate'],
+                extension=row['extension'],
+                department=row['department'],
+                job=row['job'],
+                phase=row['phase'],
+            )
+            db.add(timecard)
+        
+        db.commit()
+
+        return {"filename": file.filename, "status": "success"}
+
     except Exception as e:
         db.rollback()
         logging.error(f"Error occurred: {str(e)}")
