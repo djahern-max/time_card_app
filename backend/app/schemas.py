@@ -96,6 +96,25 @@ class DailyTimeReport(BaseModel):
     class Config:
         from_attributes = True
 
+# Equipment Schemas
+class EquipmentBase(BaseModel):
+    equipment_number: str
+    equipment_name: str
+    equipment_type: str
+    
+
+    class Config:
+        from_attributes = True
+
+class EquipmentCreate(EquipmentBase):
+    pass
+
+class Equipment(EquipmentBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
 
 
 

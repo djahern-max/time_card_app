@@ -1,26 +1,28 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./Dashboard.css";
 
-const Dashboard = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    localStorage.removeItem("role"); // Clear the role from localStorage (optional)
-    navigate("/login"); // Redirect to the login page
-  };
-
+function Dashboard() {
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>Admin Dashboard</h1>
-      <button
-        onClick={handleLogout}
-        style={{ position: "absolute", top: 10, right: 10 }}
-      >
-        Logout
-      </button>
+      <div className="dashboard-links">
+        <Link to="/upload" className="dashboard-link">
+          Upload Data
+        </Link>
+      </div>
+      <div className="dashboard-logout">
+        <button
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = "/login";
+          }}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

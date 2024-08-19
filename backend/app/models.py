@@ -52,7 +52,23 @@ class DailyTimeReport(Base):
 
     user = relationship("User", back_populates="daily_time_reports")
 
+class JobPhase(Base):
+    __tablename__ = "job_phases"
 
+    id = Column(Integer, primary_key=True, index=True)
+    job = Column(String, index=True, nullable=False)
+    phase_number = Column(String, index=True, nullable=False)
+    phase_name = Column(String, nullable=True)
+    cost_type = Column(String, nullable=True)
+
+# Equipment Model
+class Equipment(Base):
+    __tablename__ = "equipment"
+
+    id = Column(Integer, primary_key=True, index=True)
+    equipment_number = Column(String, nullable=False)
+    equipment_name = Column(String, nullable=False)
+    equipment_type = Column(String, nullable=False)
 
 
 
