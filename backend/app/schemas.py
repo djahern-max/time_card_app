@@ -179,3 +179,11 @@ class Timecard(TimecardBase):
     class Config:
         from_attributes = True
 
+class CombinedSchedule(BaseModel):
+    date: date
+    name: str
+    job: str
+    phase: str
+    card_last_four: str
+    amount: float
+    description: Optional[str]  # This can be None if it's nullable

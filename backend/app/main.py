@@ -20,3 +20,4 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(timecards.router)
 app.include_router(upload.router)
+app.include_router(timecards.router)
