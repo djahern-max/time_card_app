@@ -191,3 +191,15 @@ class CombinedSchedule(BaseModel):
 
     class Config:
         orm_mode = True
+
+from pydantic import BaseModel
+from typing import Optional
+
+class Schedule(BaseModel):
+    emp_code: str
+    date: str
+    job: Optional[str] = None
+    phase: Optional[str] = None
+
+    class Config:
+        orm_mode = True

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./CreditCardTransactions.css"; // Make sure you have a corresponding CSS file for styling
+import { Link } from "react-router-dom";
+import "./CreditCardTransactions.css";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
@@ -10,13 +11,13 @@ function CreditCardTransactions() {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
       .then((response) => response.json())
       .then((data) => {
-        // Sort data by employee code alphabetically
+        // Sort data by emp_code alphabetically
         const sortedData = data.sort((a, b) =>
           a.emp_code.localeCompare(b.emp_code)
         );
         setTransactions(sortedData);
 
-        // Extract unique employee codes for dropdown
+        // Extract unique emp_codes for dropdown
         const codes = Array.from(
           new Set(sortedData.map((entry) => entry.emp_code))
         );
@@ -25,7 +26,6 @@ function CreditCardTransactions() {
       .catch((error) => console.error("Error fetching transactions:", error));
   }, []);
 
-  // Filter transactions based on selected employee code
   const filteredTransactions = selectedEmpCode
     ? transactions.filter(
         (transaction) => transaction.emp_code === selectedEmpCode
@@ -64,6 +64,7 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Schedule</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +80,13 @@ function CreditCardTransactions() {
                 })}
               </td>
               <td>{transaction.description}</td>
+              <td>
+                <Link
+                  to={`/schedule/${transaction.emp_code}/${transaction.date}`}
+                >
+                  View Schedule
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

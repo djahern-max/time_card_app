@@ -13,6 +13,7 @@ import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
+import Schedule from "./components/Schedule/Schedule";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -36,6 +37,7 @@ function App() {
           path="/credit-card-transactions"
           element={<CreditCardTransactions />}
         />
+        <Route path="/schedule/:emp_code/:date" element={<Schedule />} />
       </Routes>
     </Router>
   );
