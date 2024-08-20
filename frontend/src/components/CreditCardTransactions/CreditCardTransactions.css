@@ -6,7 +6,7 @@ html {
   overflow: hidden; /* Prevent page scrollbars */
 }
 
-.historical-schedule-container {
+.credit-card-transactions-container {
   margin: 20px;
   font-family: Arial, sans-serif;
   max-height: 100vh; /* Make sure the container can fill the screen height */
@@ -28,20 +28,20 @@ html {
   width: calc(100% - 20px); /* Adjust the width to account for the padding */
 }
 
-.historical-schedule-table {
+.transactions-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.historical-schedule-table th,
-.historical-schedule-table td {
+.transactions-table th,
+.transactions-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-.historical-schedule-table th {
+.transactions-table th {
   background-color: #f2f2f2;
   font-weight: bold;
   position: sticky;
@@ -51,15 +51,15 @@ html {
   padding-right: 20px; /* Add padding to avoid overlap with the scrollbar */
 }
 
-.historical-schedule-table tr:nth-child(even) {
+.transactions-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.historical-schedule-table tr:hover {
+.transactions-table tr:hover {
   background-color: #ddd;
 }
 
-.historical-schedule-table-wrapper {
+.transactions-table-wrapper {
   overflow-x: auto;
   padding-right: 20px; /* Add padding to avoid overlap with the scrollbar */
 }

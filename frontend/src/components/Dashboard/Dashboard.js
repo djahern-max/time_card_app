@@ -10,8 +10,8 @@ function Dashboard() {
         <Link to="/upload" className="dashboard-link">
           Upload Data
         </Link>
-        <Link to="/schedule" className="dashboard-link">
-          View Historical Schedule
+        <Link to="/credit-card-transactions" className="dashboard-link">
+          Review Credit Card Transactions
         </Link>
       </div>
       <div className="dashboard-logout">

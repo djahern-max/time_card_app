@@ -12,7 +12,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
-import HistoricalSchedule from "./components/Dashboard/HistoricalSchedule"; // Import your new component
+import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -32,8 +32,10 @@ function App() {
           element={<MechanicsTimeReport />}
         />
         <Route path="/upload" element={<Upload />} />
-        <Route path="/schedule" element={<HistoricalSchedule />} />{" "}
-        {/* Add the new route */}
+        <Route
+          path="/credit-card-transactions"
+          element={<CreditCardTransactions />}
+        />
       </Routes>
     </Router>
   );
