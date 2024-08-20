@@ -10,6 +10,9 @@ function Dashboard() {
         <Link to="/upload" className="dashboard-link">
           Upload Data
         </Link>
+        <Link to="/schedule" className="dashboard-link">
+          View Historical Schedule
+        </Link>
       </div>
       <div className="dashboard-logout">
         <button
