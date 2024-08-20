@@ -1,8 +1,31 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent page scrollbars */
+}
+
 .historical-schedule-container {
   margin: 20px;
   font-family: Arial, sans-serif;
   max-height: 100vh; /* Make sure the container can fill the screen height */
   overflow-y: auto; /* Enable scrolling if content exceeds container height */
+  height: calc(
+    100vh - 40px
+  ); /* Adjust the container height to fit within the viewport minus margins */
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+.filter-container {
+  margin-bottom: 20px;
+  padding-right: 20px; /* Add padding to prevent overlap with the scrollbar */
+}
+
+#employee-select {
+  margin-left: 10px;
+  padding: 5px;
+  width: calc(100% - 20px); /* Adjust the width to account for the padding */
 }
 
 .historical-schedule-table {
@@ -25,6 +48,7 @@
   top: 0;
   z-index: 2;
   text-align: left;
+  padding-right: 20px; /* Add padding to avoid overlap with the scrollbar */
 }
 
 .historical-schedule-table tr:nth-child(even) {
@@ -35,26 +59,7 @@
   background-color: #ddd;
 }
 
-.filter-container {
-  margin-bottom: 20px;
-}
-
-#employee-select {
-  margin-left: 10px;
-  padding: 5px;
-}
-
-/* Additional styling to ensure full visibility */
-body,
-html {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* Prevent page scrollbars */
-}
-
-.historical-schedule-container {
-  height: calc(
-    100vh - 40px
-  ); /* Adjust the container height to fit within the viewport minus margins */
+.historical-schedule-table-wrapper {
+  overflow-x: auto;
+  padding-right: 20px; /* Add padding to avoid overlap with the scrollbar */
 }

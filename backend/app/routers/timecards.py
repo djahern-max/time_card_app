@@ -31,39 +31,61 @@ def get_combined_schedule(db: Session = Depends(get_db)):
         combined_schedule = db.execute(
             text(
                 """
+                WITH timecard_cte AS (
+                    SELECT 
+                        t.emp_code, 
+                        t.date, 
+                        t.name, 
+                        t.job, 
+                        t.phase, 
+                        ROW_NUMBER() OVER (PARTITION BY t.emp_code ORDER BY t.date DESC) AS rn
+                    FROM 
+                        timecards t
+                    JOIN 
+                        credit_card_transactions c 
+                    ON 
+                        t.emp_code = c.emp_code
+                    WHERE
+                        t.date BETWEEN (c.transaction_date - INTERVAL '2 DAY') AND c.transaction_date
+                )
                 SELECT
-                    t.date,
-                    t.name,
-                    t.job,
-                    t.phase,
+                    c.transaction_date AS date,
+                    c.emp_code,
+                    COALESCE(t.name, '') AS name,
+                    COALESCE(t.job, '') AS job,
+                    COALESCE(t.phase, '') AS phase,
                     c.card_last_four,
                     c.amount,
                     c.description
                 FROM
-                    timecards t
-                JOIN
                     credit_card_transactions c
-                ON
-                    t.emp_code = c.emp_code
-                    AND t.date = c.transaction_date
+                LEFT JOIN 
+                    timecard_cte t 
+                ON 
+                    c.emp_code = t.emp_code 
                 ORDER BY
-                    t.date ASC;
+                    c.transaction_date ASC;
                 """
             )
         ).fetchall()
 
         combined_schedule_list = [
             {
-                "date": row[0],
-                "name": row[1],
-                "job": row[2],
-                "phase": row[3],
-                "card_last_four": row[4],
-                "amount": row[5],
-                "description": row[6]
+                "date": row[0].strftime("%Y-%m-%d"),  # Convert to string in "YYYY-MM-DD" format
+                "emp_code": row[1],
+                "name": row[2],
+                "job": row[3],
+                "phase": row[4],
+                "card_last_four": row[5],
+                "amount": row[6],
+                "description": row[7]
             } for row in combined_schedule
         ]
 
         return combined_schedule_list
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+

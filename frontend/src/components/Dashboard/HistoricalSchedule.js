@@ -11,6 +11,8 @@ function HistoricalSchedule() {
     fetch("http://127.0.0.1:8000/combined")
       .then((response) => response.json())
       .then((data) => {
+        console.log("Fetched data:", data); // Log the data to inspect it
+
         // Sort data by name
         const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
         setScheduleData(sortedData);
@@ -23,6 +25,20 @@ function HistoricalSchedule() {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  // Helper function to format the amount
+  const formatAmount = (amount) => {
+    return amount.toLocaleString("en-US", {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+  // Helper function to format the job number (removing decimal)
+  const formatJob = (job) => {
+    return job ? Math.floor(job) : "N/A"; // Use Math.floor to remove decimal
+  };
 
   // Filter data based on selected employee
   const filteredData = selectedEmployee
@@ -62,17 +78,23 @@ function HistoricalSchedule() {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((entry, index) => (
-            <tr key={index}>
-              <td>{entry.date}</td>
-              <td>{entry.name}</td>
-              <td>{entry.job}</td>
-              <td>{entry.phase}</td>
-              <td>{entry.card_last_four}</td>
-              <td>{entry.amount}</td>
-              <td>{entry.description}</td>
+          {filteredData.length > 0 ? (
+            filteredData.map((entry, index) => (
+              <tr key={index}>
+                <td>{entry.date}</td>
+                <td>{entry.name || "N/A"}</td>
+                <td>{formatJob(entry.job)}</td>
+                <td>{entry.phase || "N/A"}</td>
+                <td>{entry.card_last_four}</td>
+                <td>{formatAmount(entry.amount)}</td>
+                <td>{entry.description}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7">No data available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
