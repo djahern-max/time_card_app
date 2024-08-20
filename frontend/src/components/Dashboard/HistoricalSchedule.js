@@ -1,19 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./HistoricalSchedule.css";
 
-const HistoricalSchedule = () => {
-  const [schedule, setSchedule] = useState([]);
+function HistoricalSchedule() {
+  const [scheduleData, setScheduleData] = useState([]);
+  const [employeeNames, setEmployeeNames] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
 
+  // Fetch data on component mount
   useEffect(() => {
     fetch("http://127.0.0.1:8000/combined")
       .then((response) => response.json())
-      .then((data) => setSchedule(data))
-      .catch((error) => console.error("Error fetching schedule:", error));
+      .then((data) => {
+        // Sort data by name
+        const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+        setScheduleData(sortedData);
+
+        // Get unique names for the dropdown
+        const names = Array.from(
+          new Set(sortedData.map((entry) => entry.name))
+        );
+        setEmployeeNames(names);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // Filter data based on selected employee
+  const filteredData = selectedEmployee
+    ? scheduleData.filter((entry) => entry.name === selectedEmployee)
+    : scheduleData;
+
   return (
-    <div>
-      <h1>Historical Schedule</h1>
-      <table>
+    <div className="historical-schedule-container">
+      <h1>Credit Card Transactions</h1>
+
+      <div className="filter-container">
+        <label htmlFor="employee-select">Filter by Employee:</label>
+        <select
+          id="employee-select"
+          value={selectedEmployee}
+          onChange={(e) => setSelectedEmployee(e.target.value)}
+        >
+          <option value="">All Employees</option>
+          {employeeNames.map((name, index) => (
+            <option key={index} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <table className="historical-schedule-table">
         <thead>
           <tr>
             <th>Date</th>
@@ -26,7 +62,7 @@ const HistoricalSchedule = () => {
           </tr>
         </thead>
         <tbody>
-          {schedule.map((entry, index) => (
+          {filteredData.map((entry, index) => (
             <tr key={index}>
               <td>{entry.date}</td>
               <td>{entry.name}</td>
@@ -41,6 +77,6 @@ const HistoricalSchedule = () => {
       </table>
     </div>
   );
-};
+}
 
 export default HistoricalSchedule;
