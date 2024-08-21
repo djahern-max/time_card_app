@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [employeeCodes, setEmployeeCodes] = useState([]);
   const [selectedEmpCode, setSelectedEmpCode] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
@@ -31,6 +32,10 @@ function CreditCardTransactions() {
         (transaction) => transaction.emp_code === selectedEmpCode
       )
     : transactions;
+
+  const handleRowClick = (empCode) => {
+    navigate(`/schedule/${empCode}`);
+  };
 
   if (transactions.length === 0) {
     return <div>No transactions found.</div>;
@@ -64,12 +69,15 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Schedule</th>
           </tr>
         </thead>
         <tbody>
           {filteredTransactions.map((transaction, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onClick={() => handleRowClick(transaction.emp_code)}
+              style={{ cursor: "pointer" }}
+            >
               <td>{transaction.date}</td>
               <td>{transaction.emp_code}</td>
               <td>{transaction.card_last_four}</td>
@@ -80,11 +88,6 @@ function CreditCardTransactions() {
                 })}
               </td>
               <td>{transaction.description}</td>
-              <td>
-                <Link to={`/schedule/${transaction.emp_code}`}>
-                  View Schedule
-                </Link>
-              </td>
             </tr>
           ))}
         </tbody>
