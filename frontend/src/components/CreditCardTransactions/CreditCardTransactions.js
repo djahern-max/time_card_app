@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [employeeCodes, setEmployeeCodes] = useState([]);
   const [selectedEmpCode, setSelectedEmpCode] = useState("");
-  const navigate = useNavigate();
+  const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
@@ -23,34 +22,51 @@ function CreditCardTransactions() {
           new Set(sortedData.map((entry) => entry.emp_code))
         );
         setEmployeeCodes(codes);
+
+        // Initialize input values
+        const initialValues = {};
+        sortedData.forEach((transaction) => {
+          initialValues[transaction.id] = transaction.coding || "";
+        });
+        setInputValues(initialValues);
       })
       .catch((error) => console.error("Error fetching transactions:", error));
   }, []);
+
+  const handleCodeChange = (event, transactionId) => {
+    const newCode = event.target.value;
+    setInputValues({
+      ...inputValues,
+      [transactionId]: newCode,
+    });
+
+    updateCode(transactionId, newCode);
+  };
+
+  const updateCode = (transactionId, newCode) => {
+    console.log(`Updating transaction with ID: ${transactionId}`);
+    console.log(`New code: ${newCode}`);
+
+    fetch(
+      `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
+      {
+        method: "POST",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Code updated:", data);
+      })
+      .catch((error) => {
+        console.error("Error updating code:", error);
+      });
+  };
 
   const filteredTransactions = selectedEmpCode
     ? transactions.filter(
         (transaction) => transaction.emp_code === selectedEmpCode
       )
     : transactions;
-
-  const handleRowClick = (empCode) => {
-    navigate(`/schedule/${empCode}`);
-  };
-
-  const handleCodeChange = (transactionId, newCode) => {
-    fetch(`http://127.0.0.1:8000/update_code/${transactionId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code: newCode }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Code updated:", data);
-      })
-      .catch((error) => console.error("Error updating code:", error));
-  };
 
   if (transactions.length === 0) {
     return <div>No transactions found.</div>;
@@ -92,12 +108,8 @@ function CreditCardTransactions() {
           </tr>
         </thead>
         <tbody>
-          {filteredTransactions.map((transaction, index) => (
-            <tr
-              key={index}
-              onClick={() => handleRowClick(transaction.emp_code)}
-              style={{ cursor: "pointer" }}
-            >
+          {filteredTransactions.map((transaction) => (
+            <tr key={transaction.id} style={{ cursor: "pointer" }}>
               <td>{transaction.date}</td>
               <td>{transaction.emp_code}</td>
               <td>{transaction.card_last_four}</td>
@@ -111,11 +123,8 @@ function CreditCardTransactions() {
               <td>
                 <input
                   type="text"
-                  value={transaction.code || ""}
-                  onChange={(e) =>
-                    handleCodeChange(transaction.id, e.target.value)
-                  }
-                  onClick={(e) => e.stopPropagation()} // Prevent row click when typing
+                  value={inputValues[transaction.id] || ""}
+                  onChange={(e) => handleCodeChange(e, transaction.id)}
                 />
               </td>
             </tr>

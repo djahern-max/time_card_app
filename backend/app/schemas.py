@@ -222,3 +222,14 @@ class EmployeeSchedule(BaseModel):
 
     class Config:
         from_attributes = True
+
+class CreditCardTransactionSchema(BaseModel):
+    id: int  # Include the ID field
+    date: str
+    emp_code: str
+    card_last_four: str
+    amount: float
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True

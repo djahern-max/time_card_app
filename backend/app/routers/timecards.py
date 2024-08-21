@@ -25,13 +25,14 @@ def create_daily_time_report(report: schemas.DailyTimecardCreate, db: Session = 
 
 
 
-@router.get("/credit_card_transactions", response_model=List[schemas.CombinedSchedule])
+@router.get("/credit_card_transactions", response_model=List[schemas.CreditCardTransactionSchema])
 def get_credit_card_transactions(db: Session = Depends(get_db)):
     try:
         transactions = db.execute(
             text(
                 """
                 SELECT
+                    c.id,
                     c.transaction_date AS date,
                     c.emp_code,
                     c.card_last_four,
@@ -47,6 +48,7 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
 
         transactions_list = [
             {
+                "id": row.id,  # Make sure 'id' is included here
                 "date": row.date.strftime("%Y-%m-%d"),
                 "emp_code": row.emp_code,
                 "card_last_four": row.card_last_four,
@@ -59,4 +61,3 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
         return transactions_list
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
