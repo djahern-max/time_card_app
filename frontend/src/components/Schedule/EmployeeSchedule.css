@@ -1,0 +1,21 @@
+.schedule-container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.schedule-day {
+  margin-bottom: 20px;
+}
+
+.schedule-day h2 {
+  margin-bottom: 10px;
+}
+
+.schedule-day ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.schedule-day li {
+  margin-bottom: 5px;
+}

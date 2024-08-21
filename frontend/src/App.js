@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
@@ -13,7 +8,7 @@ import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
-import EmployeeSchedule from "./components/Schedule/EmployeeSchedule"; // Import the EmployeeSchedule component
+import EmployeeSchedule from "./components/Schedule/EmployeeSchedule";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -35,10 +30,7 @@ function App() {
           path="/credit-card-transactions"
           element={<CreditCardTransactions />}
         />
-        <Route
-          path="/schedule/:empCode"
-          element={<EmployeeSchedule />} // Ensure empCode is passed as a parameter
-        />
+        <Route path="/schedule/:empCode" element={<EmployeeSchedule />} />
       </Routes>
     </Router>
   );

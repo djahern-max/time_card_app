@@ -81,9 +81,7 @@ function CreditCardTransactions() {
               </td>
               <td>{transaction.description}</td>
               <td>
-                <Link
-                  to={`/schedule/${transaction.emp_code}/${transaction.date}`}
-                >
+                <Link to={`/schedule/${transaction.emp_code}`}>
                   View Schedule
                 </Link>
               </td>

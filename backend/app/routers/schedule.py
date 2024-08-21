@@ -4,7 +4,7 @@ from app import schemas
 from app.database import get_db
 from typing import List
 from sqlalchemy import text
-from datetime import timedelta, datetime
+
 
 router = APIRouter()
 
@@ -56,37 +56,37 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.get("/schedule", response_model=List[schemas.EmployeeSchedule])
-def get_schedule(db: Session = Depends(get_db)):
-    try:
-        query = text("""
-            SELECT 
-                t.emp_code,
-                t.name,
-                t.date,
-                t.job,
-                t.phase
-            FROM timecards t
-            ORDER BY t.date ASC;
-        """)
-        results = db.execute(query).fetchall()
+# @router.get("/schedule", response_model=List[schemas.EmployeeSchedule])
+# def get_schedule(db: Session = Depends(get_db)):
+#     try:
+#         query = text("""
+#             SELECT 
+#                 t.emp_code,
+#                 t.name,
+#                 t.date,
+#                 t.job,
+#                 t.phase
+#             FROM timecards t
+#             ORDER BY t.date ASC;
+#         """)
+#         results = db.execute(query).fetchall()
 
-        schedule_list = [
-            {
-                "emp_code": row.emp_code,
-                "name": row.name,
-                "date": str(row.date),
-                "jobs": [
-                    {
-                        "job": row.job,
-                        "phase": row.phase
-                    }
-                ]
-            }
-            for row in results
-        ]
+#         schedule_list = [
+#             {
+#                 "emp_code": row.emp_code,
+#                 "name": row.name,
+#                 "date": str(row.date),
+#                 "jobs": [
+#                     {
+#                         "job": row.job,
+#                         "phase": row.phase
+#                     }
+#                 ]
+#             }
+#             for row in results
+#         ]
 
-        return schedule_list
+#         return schedule_list
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
