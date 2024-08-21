@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./EmployeeSchedule.css"; // Make sure to style it according to your needs
+// import "./EmployeeSchedule.css";
 
 function EmployeeSchedule() {
   const { emp_code, date } = useParams(); // Assuming you navigate to this component with emp_code and date params

@@ -44,3 +44,35 @@ def get_employee_schedule(emp_code: str, date: str, db: Session = Depends(get_db
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/schedule", response_model=List[schemas.EmployeeSchedule])
+def get_schedule(db: Session = Depends(get_db)):
+    try:
+        result = db.execute(
+            text(
+                """
+                SELECT 
+                    emp_code,
+                    date,
+                    job,
+                    phase
+                FROM 
+                    timecards
+                ORDER BY 
+                    date ASC;
+                """
+            )
+        ).fetchall()
+
+        schedule_list = [
+            {
+                "emp_code": row.emp_code,
+                "date": row.date.strftime("%Y-%m-%d"),
+                "job": row.job,
+                "phase": row.phase
+            }
+            for row in result
+        ]
+
+        return schedule_list
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

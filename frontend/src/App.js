@@ -14,6 +14,7 @@ import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
 import Schedule from "./components/Schedule/Schedule";
+import AllEmployeesSchedule from "./components/Schedule/AllEmployeesSchedule";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -38,6 +39,10 @@ function App() {
           element={<CreditCardTransactions />}
         />
         <Route path="/schedule/:emp_code/:date" element={<Schedule />} />
+        <Route
+          path="/all-employees-schedule"
+          element={<AllEmployeesSchedule />}
+        />
       </Routes>
     </Router>
   );

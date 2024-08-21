@@ -13,6 +13,9 @@ function Dashboard() {
         <Link to="/credit-card-transactions" className="dashboard-link">
           Review Credit Card Transactions
         </Link>
+        <Link to="/all-employees-schedule" className="dashboard-link">
+          View All Employees' Schedule
+        </Link>
       </div>
       <div className="dashboard-logout">
         <button

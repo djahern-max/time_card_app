@@ -203,3 +203,12 @@ class Schedule(BaseModel):
 
     class Config:
         orm_mode = True
+
+class EmployeeSchedule(BaseModel):
+    emp_code: str
+    date: str
+    job: Optional[str]
+    phase: Optional[str]
+
+    class Config:
+        from_attributes = True
