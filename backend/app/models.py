@@ -110,3 +110,4 @@ class Timecard(Base):
     department = Column(String, nullable=False)
     job = Column(String, nullable=False)
     phase = Column(String, nullable=False)
+

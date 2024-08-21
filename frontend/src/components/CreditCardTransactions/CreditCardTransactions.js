@@ -27,6 +27,35 @@ function CreditCardTransactions() {
       .catch((error) => console.error("Error fetching transactions:", error));
   }, []);
 
+  const handleCodingChange = (transactionId, value) => {
+    const updatedTransactions = transactions.map((transaction) => {
+      if (transaction.id === transactionId) {
+        transaction.coding = value;
+      }
+      return transaction;
+    });
+    setTransactions(updatedTransactions);
+
+    // Auto-save the coding to the backend
+    fetch(`http://127.0.0.1:8000/credit_card_transactions/${transactionId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ coding: value }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to save coding");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Coding saved:", data);
+      })
+      .catch((error) => console.error("Error saving coding:", error));
+  };
+
   const filteredTransactions = selectedEmpCode
     ? transactions.filter(
         (transaction) => transaction.emp_code === selectedEmpCode
@@ -61,6 +90,10 @@ function CreditCardTransactions() {
         </select>
       </div>
 
+      <p className="clickable-row-note">
+        Click on a row to view the employee's schedule.
+      </p>
+
       <table className="transactions-table">
         <thead>
           <tr>
@@ -69,6 +102,7 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Coding</th> {/* New Coding column */}
           </tr>
         </thead>
         <tbody>
@@ -88,6 +122,18 @@ function CreditCardTransactions() {
                 })}
               </td>
               <td>{transaction.description}</td>
+              <td>
+                <input
+                  type="text"
+                  value={transaction.coding || ""}
+                  onClick={(e) => e.stopPropagation()} // Prevent navigation when input is clicked
+                  onChange={(e) =>
+                    handleCodingChange(transaction.id, e.target.value)
+                  }
+                  placeholder="Enter coding"
+                  style={{ width: "100%" }}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
