@@ -206,8 +206,10 @@ class Schedule(BaseModel):
         orm_mode = True
 
 class JobPhase(BaseModel):
-    job: Optional[str] = None
-    phase: Optional[str] = None
+    job: Optional[str]
+    phase: Optional[str]
+    hours_worked: Optional[float]  # Add hours_worked
+    rate: Optional[float]          # Add rate
 
 class JobWithDate(BaseModel):
     date: str

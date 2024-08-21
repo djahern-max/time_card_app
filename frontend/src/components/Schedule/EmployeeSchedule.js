@@ -54,6 +54,10 @@ function EmployeeSchedule() {
               <li key={jIndex}>
                 <b>Job:</b> {job.job.split(".")[0] || "No job assigned"},
                 <b>Phase:</b> {job.phase || "No phase assigned"}
+                <br />
+                <b>Hours Worked:</b> {job.hours_worked || "N/A"}
+                <br />
+                <b>Rate:</b> {job.rate || "N/A"}
               </li>
             ))}
           </ul>

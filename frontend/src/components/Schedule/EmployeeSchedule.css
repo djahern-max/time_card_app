@@ -1,35 +1,33 @@
 .schedule-container {
-  margin: 20px;
-  font-family: Arial, sans-serif;
-  height: 500px; /* Set a fixed height for the container */
-  overflow-y: scroll; /* Enable vertical scrolling */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.schedule-container h2 {
+  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.schedule-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.schedule-container li {
   padding: 10px;
+  background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.schedule-date-group {
-  margin-bottom: 20px;
-}
-
-.jobs-table {
-  width: 100%;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-}
-
-.jobs-table th,
-.jobs-table td {
-  text-align: left;
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-
-.jobs-table th {
-  background-color: #f2f2f2;
-}
-
-.jobs-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }

@@ -17,6 +17,7 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
                 t.name,
                 t.date,
                 t.hours_worked,
+                t.rate,
                 t.job,
                 t.phase
             FROM timecards t
@@ -42,7 +43,9 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
                 jobs_by_date[row.date] = []
             jobs_by_date[row.date].append({
                 "job": row.job if row.job else None,
-                "phase": row.phase if row.phase else None
+                "phase": row.phase if row.phase else None,
+                "hours_worked": row.hours_worked if row.hours_worked else "N/A",
+                "rate": row.rate if row.rate else "N/A"
             })
 
         for date, jobs in jobs_by_date.items():
