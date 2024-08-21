@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 from enum import Enum
 from datetime import date
+from typing import List
 
 
 # Enum for User Roles
@@ -204,11 +205,18 @@ class Schedule(BaseModel):
     class Config:
         orm_mode = True
 
+class JobPhase(BaseModel):
+    job: Optional[str] = None
+    phase: Optional[str] = None
+
+class JobWithDate(BaseModel):
+    date: str
+    jobs: List[JobPhase]
+
 class EmployeeSchedule(BaseModel):
     emp_code: str
-    date: str
-    job: Optional[str]
-    phase: Optional[str]
+    name: str
+    jobs: List[JobWithDate]
 
     class Config:
         from_attributes = True

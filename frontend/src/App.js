@@ -13,13 +13,10 @@ import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
-import Schedule from "./components/Schedule/Schedule";
-import AllEmployeesSchedule from "./components/Schedule/AllEmployeesSchedule";
+import EmployeeSchedule from "./components/Schedule/EmployeeSchedule"; // Import the EmployeeSchedule component
 
 function App() {
   const role = localStorage.getItem("role");
-
-  console.log("App role:", role); // Debugging line
 
   return (
     <Router>
@@ -38,10 +35,9 @@ function App() {
           path="/credit-card-transactions"
           element={<CreditCardTransactions />}
         />
-        <Route path="/schedule/:emp_code/:date" element={<Schedule />} />
         <Route
-          path="/all-employees-schedule"
-          element={<AllEmployeesSchedule />}
+          path="/schedule/:empCode"
+          element={<EmployeeSchedule />} // Ensure empCode is passed as a parameter
         />
       </Routes>
     </Router>
