@@ -44,8 +44,8 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
             jobs_by_date[row.date].append({
                 "job": row.job if row.job else None,
                 "phase": row.phase if row.phase else None,
-                "hours_worked": row.hours_worked if row.hours_worked else "N/A",
-                "rate": row.rate if row.rate else "N/A"
+                "hours_worked": row.hours_worked if row.hours_worked is not None else None,
+                "rate": row.rate if row.rate is not None else None
             })
 
         for date, jobs in jobs_by_date.items():
@@ -58,6 +58,7 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
     
 # @router.get("/schedule", response_model=List[schemas.EmployeeSchedule])
 # def get_schedule(db: Session = Depends(get_db)):
