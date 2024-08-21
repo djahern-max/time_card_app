@@ -25,7 +25,7 @@ def create_daily_time_report(report: schemas.DailyTimecardCreate, db: Session = 
 
 
 
-@router.get("/credit_card_transactions", response_model=List[schemas.CreditCardTransactionSchema])
+@router.get("/credit_card_transactions", response_model=List[schemas.CombinedSchedule])
 def get_credit_card_transactions(db: Session = Depends(get_db)):
     try:
         transactions = db.execute(
@@ -37,7 +37,8 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
                     c.emp_code,
                     c.card_last_four,
                     c.amount,
-                    c.description
+                    c.description,
+                    c.coding
                 FROM
                     credit_card_transactions c
                 ORDER BY
@@ -48,12 +49,13 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
 
         transactions_list = [
             {
-                "id": row.id,  # Make sure 'id' is included here
+                "id": row.id,
                 "date": row.date.strftime("%Y-%m-%d"),
                 "emp_code": row.emp_code,
                 "card_last_four": row.card_last_four,
                 "amount": row.amount,
-                "description": row.description
+                "description": row.description,
+                "coding": row.coding  # Include coding here
             }
             for row in transactions
         ]
