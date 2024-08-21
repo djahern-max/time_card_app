@@ -27,35 +27,6 @@ function CreditCardTransactions() {
       .catch((error) => console.error("Error fetching transactions:", error));
   }, []);
 
-  const handleCodingChange = (transactionId, value) => {
-    const updatedTransactions = transactions.map((transaction) => {
-      if (transaction.id === transactionId) {
-        transaction.coding = value;
-      }
-      return transaction;
-    });
-    setTransactions(updatedTransactions);
-
-    // Auto-save the coding to the backend
-    fetch(`http://127.0.0.1:8000/credit_card_transactions/${transactionId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ coding: value }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to save coding");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Coding saved:", data);
-      })
-      .catch((error) => console.error("Error saving coding:", error));
-  };
-
   const filteredTransactions = selectedEmpCode
     ? transactions.filter(
         (transaction) => transaction.emp_code === selectedEmpCode
@@ -64,6 +35,21 @@ function CreditCardTransactions() {
 
   const handleRowClick = (empCode) => {
     navigate(`/schedule/${empCode}`);
+  };
+
+  const handleCodeChange = (transactionId, newCode) => {
+    fetch(`http://127.0.0.1:8000/update_code/${transactionId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code: newCode }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Code updated:", data);
+      })
+      .catch((error) => console.error("Error updating code:", error));
   };
 
   if (transactions.length === 0) {
@@ -102,7 +88,7 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Coding</th> {/* New Coding column */}
+            <th>Code</th>
           </tr>
         </thead>
         <tbody>
@@ -125,13 +111,11 @@ function CreditCardTransactions() {
               <td>
                 <input
                   type="text"
-                  value={transaction.coding || ""}
-                  onClick={(e) => e.stopPropagation()} // Prevent navigation when input is clicked
+                  value={transaction.code || ""}
                   onChange={(e) =>
-                    handleCodingChange(transaction.id, e.target.value)
+                    handleCodeChange(transaction.id, e.target.value)
                   }
-                  placeholder="Enter coding"
-                  style={{ width: "100%" }}
+                  onClick={(e) => e.stopPropagation()} // Prevent row click when typing
                 />
               </td>
             </tr>

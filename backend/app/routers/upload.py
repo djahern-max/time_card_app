@@ -191,3 +191,20 @@ async def upload_timecards(file: UploadFile = File(...), db: Session = Depends(g
         db.rollback()
         logging.error(f"Error occurred: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
+    
+# upload.py
+
+@router.post("/update_code/{transaction_id}")
+async def update_transaction_code(transaction_id: int, coding: str, db: Session = Depends(get_db)):
+    try:
+        transaction = db.query(models.CreditCardTransaction).filter(models.CreditCardTransaction.id == transaction_id).first()
+        if not transaction:
+            raise HTTPException(status_code=404, detail="Transaction not found")
+
+        transaction.coding = coding  # Use 'coding' here
+        db.commit()
+        return {"status": "success", "transaction_id": transaction_id, "coding": coding}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+

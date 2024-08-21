@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum, Numeric, Text
 from sqlalchemy.orm import relationship
 from .database import Base
 import enum
@@ -111,3 +111,17 @@ class Timecard(Base):
     job = Column(String, nullable=False)
     phase = Column(String, nullable=False)
 
+# models.py
+
+class CreditCardTransaction(Base):
+    __tablename__ = "credit_card_transactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    emp_code = Column(String(10), nullable=False)
+    card_last_four = Column(String(4), nullable=False)
+    statement_date = Column(Date, nullable=False)
+    transaction_date = Column(Date, nullable=False)
+    amount = Column(Numeric(10, 2), nullable=False)
+    description = Column(Text, nullable=True)
+    coding = Column(Text, nullable=True)  # Make sure this is correct
+   
