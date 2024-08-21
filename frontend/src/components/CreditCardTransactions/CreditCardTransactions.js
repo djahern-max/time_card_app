@@ -23,7 +23,7 @@ function CreditCardTransactions() {
         );
         setEmployeeCodes(codes);
 
-        // Initialize input values
+        // Populate input values with existing coding data
         const initialValues = {};
         sortedData.forEach((transaction) => {
           initialValues[transaction.id] = transaction.coding || "";
@@ -40,13 +40,7 @@ function CreditCardTransactions() {
       [transactionId]: newCode,
     });
 
-    updateCode(transactionId, newCode);
-  };
-
-  const updateCode = (transactionId, newCode) => {
-    console.log(`Updating transaction with ID: ${transactionId}`);
-    console.log(`New code: ${newCode}`);
-
+    // Save the new code to the backend
     fetch(
       `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
       {
@@ -104,7 +98,7 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Code</th>
+            <th>Coding</th>
           </tr>
         </thead>
         <tbody>
