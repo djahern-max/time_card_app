@@ -230,7 +230,7 @@ class CreditCardTransactionSchema(BaseModel):
     card_last_four: str
     amount: float
     description: Optional[str]
-    coding: Optional[str]  # Add the coding field
+    coding: Optional[str]  # Include the coding field
 
     class Config:
         orm_mode = True
