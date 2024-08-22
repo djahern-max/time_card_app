@@ -39,6 +39,7 @@ function CreditCardTransactions() {
 
   const handleCodeChange = (event, transactionId) => {
     const newCode = event.target.value;
+    const cursorPosition = event.target.selectionStart; // Corrected: using 'event' instead of 'e'
 
     fetch(
       `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
@@ -49,7 +50,23 @@ function CreditCardTransactions() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Code updated:", data);
-        fetchTransactions(); // Fetch updated transactions after code change
+
+        // Update the transactions state
+        setTransactions((prevTransactions) =>
+          prevTransactions.map((transaction) =>
+            transaction.id === transactionId
+              ? { ...transaction, coding: newCode }
+              : transaction
+          )
+        );
+
+        // Use a timeout to allow the state to update before setting the cursor position
+        setTimeout(() => {
+          const input = document.querySelector(`input[value="${newCode}"]`);
+          if (input) {
+            input.setSelectionRange(cursorPosition, cursorPosition);
+          }
+        }, 0);
       })
       .catch((error) => {
         console.error("Error updating code:", error);
