@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [employeeCodes, setEmployeeCodes] = useState([]);
   const [selectedEmpCode, setSelectedEmpCode] = useState("");
-  const [inputValues, setInputValues] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  const fetchTransactions = () => {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
       .then((response) => response.json())
       .then((data) => {
@@ -22,25 +28,13 @@ function CreditCardTransactions() {
           new Set(sortedData.map((entry) => entry.emp_code))
         );
         setEmployeeCodes(codes);
-
-        // Populate input values with existing coding data
-        const initialValues = {};
-        sortedData.forEach((transaction) => {
-          initialValues[transaction.id] = transaction.coding || "";
-        });
-        setInputValues(initialValues);
       })
       .catch((error) => console.error("Error fetching transactions:", error));
-  }, []);
+  };
 
   const handleCodeChange = (event, transactionId) => {
     const newCode = event.target.value;
-    setInputValues({
-      ...inputValues,
-      [transactionId]: newCode,
-    });
 
-    // Save the new code to the backend
     fetch(
       `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
       {
@@ -50,10 +44,15 @@ function CreditCardTransactions() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Code updated:", data);
+        fetchTransactions(); // Fetch updated transactions after code change
       })
       .catch((error) => {
         console.error("Error updating code:", error);
       });
+  };
+
+  const handleRowClick = (empCode) => {
+    navigate(`/schedule/${empCode}`);
   };
 
   const filteredTransactions = selectedEmpCode
@@ -103,7 +102,15 @@ function CreditCardTransactions() {
         </thead>
         <tbody>
           {filteredTransactions.map((transaction) => (
-            <tr key={transaction.id} style={{ cursor: "pointer" }}>
+            <tr
+              key={transaction.id}
+              style={{ cursor: "pointer" }}
+              onClick={(e) => {
+                if (e.target.tagName !== "INPUT") {
+                  handleRowClick(transaction.emp_code);
+                }
+              }}
+            >
               <td>{transaction.date}</td>
               <td>{transaction.emp_code}</td>
               <td>{transaction.card_last_four}</td>
@@ -117,8 +124,9 @@ function CreditCardTransactions() {
               <td>
                 <input
                   type="text"
-                  value={inputValues[transaction.id] || ""}
+                  value={transaction.coding || ""}
                   onChange={(e) => handleCodeChange(e, transaction.id)}
+                  onClick={(e) => e.stopPropagation()} // Prevent row click when input is clicked
                 />
               </td>
             </tr>

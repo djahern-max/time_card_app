@@ -69,3 +69,20 @@ html {
   padding: 5px;
   box-sizing: border-box;
 }
+
+.clickable-row-note {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-row-note:hover {
+  background-color: #bdc3c7;
+  color: #2980b9;
+}
