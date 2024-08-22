@@ -17,8 +17,13 @@ function CreditCardTransactions() {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
       .then((response) => response.json())
       .then((data) => {
+        // Filter out transactions with negative amounts (payments)
+        const filteredData = data.filter(
+          (transaction) => transaction.amount >= 0
+        );
+
         // Sort data by emp_code alphabetically
-        const sortedData = data.sort((a, b) =>
+        const sortedData = filteredData.sort((a, b) =>
           a.emp_code.localeCompare(b.emp_code)
         );
         setTransactions(sortedData);
