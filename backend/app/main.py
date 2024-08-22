@@ -3,6 +3,7 @@ from .routers import auth, timecards, upload, schedule
 from .database import engine
 from . import models
 from fastapi.middleware.cors import CORSMiddleware
+from .routers import ocr
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -22,3 +23,4 @@ app.include_router(timecards.router)
 app.include_router(upload.router)
 app.include_router(timecards.router)
 app.include_router(schedule.router)
+app.include_router(ocr.router)
