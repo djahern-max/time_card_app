@@ -2,7 +2,7 @@ import os
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from . import models, database, oauth2
+from app import models, database, oauth2
 import pytesseract
 from PIL import Image
 

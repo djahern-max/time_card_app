@@ -1,57 +1,89 @@
 .receipt-upload-container {
+  max-width: 600px;
+  margin: 50px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  margin: 20px;
-  border-radius: 5px;
   background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
 }
 
 .receipt-upload-container h2 {
-  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.receipt-upload-container input {
-  margin-bottom: 10px;
+input[type="file"] {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  font-size: 14px;
 }
 
-.receipt-upload-container button {
-  padding: 8px 16px;
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
   background-color: #007bff;
-  color: #fff;
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.receipt-upload-container button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #45a049;
 }
 
-.receipt-upload-container p {
-  margin-top: 10px;
+p {
+  text-align: center;
+  font-size: 14px;
   color: #333;
 }
 
-.upload-status {
-  color: green;
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-top: 10px;
-  background-color: #dff0d8;
-  padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #3c763d;
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
+.receipt-info {
+  margin-top: 30px;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
+.receipt-info h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.receipt-info pre {
+  background-color: #e8e8e8;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap; /* Ensures the text wraps within the container */
+  font-size: 14px;
+  color: #333;
+}
+
+.receipt-info a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.receipt-info a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .receipt-upload-container {
+    width: 90%;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
+
+  button {
+    font-size: 14px;
+  }
+
+  input[type="file"] {
+    font-size: 12px;
   }
 }
