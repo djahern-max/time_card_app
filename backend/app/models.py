@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum, Numeric, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum, Numeric, Text, DateTime, func
 from sqlalchemy.orm import relationship
 from .database import Base
 import enum
+
 
 class UserRole(enum.Enum):
     mechanic = "mechanic"
@@ -124,6 +125,13 @@ class CreditCardTransaction(Base):
     amount = Column(Numeric(10, 2), nullable=False)
     description = Column(Text, nullable=True)
     coding = Column(Text, nullable=True)  # Make sure this is correct
-
-    
    
+
+class Receipt(Base):
+    __tablename__ = "receipts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    filename = Column(String, index=True)
+    upload_date = Column(DateTime(timezone=True), server_default=func.now())
+    text = Column(String)
