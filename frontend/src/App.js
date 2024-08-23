@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
-import Dashboard from "./components/Dashboard/Dashboard";
+import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
 import EmployeeSchedule from "./components/Schedule/EmployeeSchedule";
 import ReceiptUpload from "./components/ReceiptUpload/ReceiptUpload";
+import MechanicDashboard from "./components/Dashboard/MechanicDashboard";
+import GeneralDashboard from "./components/Dashboard/GeneralDashboard";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -20,7 +22,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/mechanic-dashboard" element={<MechanicDashboard />} />
+        <Route path="/general-dashboard" element={<GeneralDashboard />} />
         <Route path="/daily-time-report" element={<DailyTimeReport />} />
         <Route
           path="/mechanics-time-report"

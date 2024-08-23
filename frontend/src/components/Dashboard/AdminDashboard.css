@@ -25,13 +25,15 @@ body {
 }
 
 /* Dashboard links */
-.dashboard-links {
-  margin-bottom: 20px;
+.dashboard-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .dashboard-link {
   display: block;
-  margin-bottom: 10px;
+  margin: 10px 0;
   font-size: 16px;
   color: #007bff;
   text-decoration: none;

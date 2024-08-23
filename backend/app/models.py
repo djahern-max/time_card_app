@@ -124,4 +124,6 @@ class CreditCardTransaction(Base):
     amount = Column(Numeric(10, 2), nullable=False)
     description = Column(Text, nullable=True)
     coding = Column(Text, nullable=True)  # Make sure this is correct
+
+    
    

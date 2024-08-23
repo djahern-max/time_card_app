@@ -29,13 +29,13 @@ function Login() {
         // Navigate based on role
         if (role === "admin") {
           console.log("Navigating to Admin Dashboard");
-          navigate("/dashboard");
+          navigate("/admin-dashboard");
         } else if (role === "mechanic") {
-          console.log("Navigating to Mechanics Time Report");
-          navigate("/mechanics-time-report");
+          console.log("Navigating to Mechanics Dasshboard");
+          navigate("/mechanics-dashboard");
         } else {
           console.log("Navigating to Daily Time Report");
-          navigate("/daily-time-report");
+          navigate("/general-dashboard");
         }
       }
     } catch (err) {
