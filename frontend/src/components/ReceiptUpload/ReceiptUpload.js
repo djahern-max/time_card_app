@@ -24,7 +24,7 @@ function ReceiptUpload() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUploadStatus("Upload successful!"); // Removed extracted text
+        setUploadStatus("Upload successful!");
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -37,7 +37,7 @@ function ReceiptUpload() {
       <h2>Upload Receipt</h2>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
-      <p>{uploadStatus}</p>
+      <p className="upload-status">{uploadStatus}</p> {/* Added class here */}
     </div>
   );
 }
