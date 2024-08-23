@@ -24,7 +24,7 @@ function ReceiptUpload() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUploadStatus(`Upload successful! Extracted text: ${data.text}`);
+        setUploadStatus("Upload successful!"); // Removed extracted text
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
