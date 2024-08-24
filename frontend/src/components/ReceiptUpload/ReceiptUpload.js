@@ -5,9 +5,14 @@ function ReceiptUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const [receiptData, setReceiptData] = useState(null);
+  const [codingInfo, setCodingInfo] = useState(""); // New state for coding information
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+  };
+
+  const handleCodingChange = (event) => {
+    setCodingInfo(event.target.value); // Update coding information
   };
 
   const handleUpload = () => {
@@ -25,6 +30,7 @@ function ReceiptUpload() {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("coding", codingInfo); // Add coding information to the form data
 
     fetch("http://127.0.0.1:8000/upload_receipt", {
       method: "POST",
@@ -55,6 +61,12 @@ function ReceiptUpload() {
     <div className="receipt-upload-container">
       <h2>Upload Receipt</h2>
       <input type="file" onChange={handleFileChange} />
+      <input
+        type="text"
+        placeholder="Enter coding information"
+        value={codingInfo}
+        onChange={handleCodingChange} // Handle coding input change
+      />
       <button onClick={handleUpload}>Upload</button>
       <p>{uploadStatus}</p>
 

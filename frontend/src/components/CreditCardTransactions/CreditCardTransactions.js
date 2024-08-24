@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
+import logout from "../../assets/logout.svg";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
@@ -39,7 +40,7 @@ function CreditCardTransactions() {
 
   const handleCodeChange = (event, transactionId) => {
     const newCode = event.target.value;
-    const cursorPosition = event.target.selectionStart; // Corrected: using 'event' instead of 'e'
+    const cursorPosition = event.target.selectionStart;
 
     fetch(
       `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
@@ -77,6 +78,11 @@ function CreditCardTransactions() {
     navigate(`/schedule/${empCode}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove the token from localStorage
+    navigate("/login"); // Redirect to the login page
+  };
+
   const filteredTransactions = selectedEmpCode
     ? transactions.filter(
         (transaction) => transaction.emp_code === selectedEmpCode
@@ -89,7 +95,17 @@ function CreditCardTransactions() {
 
   return (
     <div className="credit-card-transactions-container">
+      <div className="logout-link">
+        <a href="#" onClick={handleLogout}>
+          <img src={logout} alt="Logout" className="logout-icon" />
+        </a>
+      </div>
+
       <h1>Credit Card Transactions</h1>
+
+      {/* <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button> */}
 
       <div className="filter-container">
         <label htmlFor="employee-select">Filter by Employee Code:</label>

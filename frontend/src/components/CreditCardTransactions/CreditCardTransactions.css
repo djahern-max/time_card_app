@@ -86,3 +86,28 @@ html {
   background-color: #bdc3c7;
   color: #2980b9;
 }
+
+.logout-icon {
+  width: 30px; /* Increased size */
+  height: 30px; /* Increased size */
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.logout-link {
+  display: block;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.logout-link a {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.logout-link a:hover {
+  text-decoration: underline;
+}
