@@ -125,19 +125,26 @@ class CreditCardTransaction(Base):
     transaction_date = Column(Date, nullable=False)
     amount = Column(Numeric(10, 2), nullable=False)
     description = Column(Text, nullable=True)
-    coding = Column(Text, nullable=True)  # Make sure this is correct
-   
+    coding = Column(Text, nullable=True)  # Admin coding
+    employee_coding = Column(Text, nullable=True)  # Employee coding
+    image_path = Column(String, nullable=True)  # Path to the receipt image
+
+    receipts = relationship("Receipt", back_populates="transaction")
+
 
 class Receipt(Base):
     __tablename__ = "receipts"
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
+    transaction_id = Column(Integer, ForeignKey("credit_card_transactions.id"))
+    emp_code = Column(String(10), nullable=False)  # Adding emp_code
     filename = Column(String, index=True)
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     text = Column(String)
     coding = Column(String)
-    emp_code = Column(String)  # Adding emp_code field
-    transaction_id = Column(Integer, ForeignKey("credit_card_transactions.id"))
+    employee_coding = Column(String)
+    image_path = Column(String)
 
+    transaction = relationship("CreditCardTransaction", back_populates="receipts")
     user = relationship("User", back_populates="receipts")

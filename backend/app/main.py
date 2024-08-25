@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import auth, timecards, upload, schedule
+from .routers import auth, timecards, upload, schedule, credit_card_transactions
 from .database import engine
 from . import models
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,3 +24,4 @@ app.include_router(upload.router)
 app.include_router(timecards.router)
 app.include_router(schedule.router)
 app.include_router(ocr.router)
+app.include_router(credit_card_transactions.router)

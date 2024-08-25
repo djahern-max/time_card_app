@@ -17,7 +17,8 @@ os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 @router.post("/upload_receipt")
 async def upload_receipt(
     file: UploadFile = File(...),
-    coding: str = Form(...),  # Accept coding information from the frontend
+    coding: str = Form(...),  # This can be the admin coding or any other type of coding
+    employee_coding: str = Form(...),  # Accept employee coding information separately
     transaction_id: int = Form(...),  # Accept transaction_id from the frontend
     emp_code: str = Form(...),  # Accept employee code from the frontend
     db: Session = Depends(database.get_db),
@@ -38,16 +39,23 @@ async def upload_receipt(
             user_id=current_user.id,
             filename=file.filename,
             text=text,
-            coding=coding,  # Store the coding information
+            coding=coding,  # Store the admin or general coding information
+            employee_coding=employee_coding,  # Store the employee coding information
             emp_code=emp_code,
-            transaction_id=transaction_id  # Store the transaction_id to link with the transaction
+            transaction_id=transaction_id,  # Store the transaction_id to link with the transaction
+            image_path=file_path  # Store the file path in the receipt model
         )
         db.add(receipt)
+
+        # Update the corresponding credit card transaction with employee coding and image path
+        transaction = db.query(models.CreditCardTransaction).filter(models.CreditCardTransaction.id == transaction_id).first()
+        if transaction:
+            transaction.employee_coding = employee_coding
+            transaction.image_path = file_path
+
         db.commit()
         db.refresh(receipt)
 
         return JSONResponse(content={"status": "success", "text": text, "image_path": file_path})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-

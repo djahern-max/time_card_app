@@ -18,6 +18,10 @@ function CreditCardTransactions() {
     fetch("http://127.0.0.1:8000/credit_card_transactions")
       .then((response) => response.json())
       .then((data) => {
+        if (!Array.isArray(data)) {
+          throw new Error("Unexpected response format");
+        }
+
         // Filter out transactions with negative amounts (payments)
         const filteredData = data.filter(
           (transaction) => transaction.amount >= 0
@@ -131,9 +135,9 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Coding (Admin)</th> {/* Admin coding */}
-            <th>Employee Coding</th> {/* Employee coding */}
-            <th>Links</th> {/* New column for links */}
+            <th>Coding (Admin)</th>
+            <th>Employee Coding</th>
+            <th>Links</th>
           </tr>
         </thead>
         <tbody>

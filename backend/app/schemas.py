@@ -231,6 +231,23 @@ class CreditCardTransactionSchema(BaseModel):
     amount: float
     description: Optional[str]
     coding: Optional[str]  # Include the coding field
+    employee_coding: Optional[str]  # Include the employee_coding field
+    image_path: Optional[str]  # Mark image_path as Optional
+
+    class Config:
+        orm_mode = True
+
+class ReceiptSchema(BaseModel):
+    id: int
+    user_id: int
+    transaction_id: int
+    emp_code: str
+    filename: str
+    upload_date: datetime
+    text: Optional[str] = None
+    coding: Optional[str] = None
+    employee_coding: Optional[str] = None
+    image_path: Optional[str] = None
 
     class Config:
         orm_mode = True

@@ -25,41 +25,41 @@ def create_daily_time_report(report: schemas.DailyTimecardCreate, db: Session = 
 
 
 
-@router.get("/credit_card_transactions", response_model=List[schemas.CreditCardTransactionSchema])
-def get_credit_card_transactions(db: Session = Depends(get_db)):
-    try:
-        transactions = db.execute(
-            text(
-                """
-                SELECT
-                    c.id,
-                    c.transaction_date AS date,
-                    c.emp_code,
-                    c.card_last_four,
-                    c.amount,
-                    c.description,
-                    c.coding
-                FROM
-                    credit_card_transactions c
-                ORDER BY
-                    c.transaction_date ASC;
-                """
-            )
-        ).fetchall()
+# @router.get("/credit_card_transactions", response_model=List[schemas.CreditCardTransactionSchema])
+# def get_credit_card_transactions(db: Session = Depends(get_db)):
+#     try:
+#         transactions = db.execute(
+#             text(
+#                 """
+#                 SELECT
+#                     c.id,
+#                     c.transaction_date AS date,
+#                     c.emp_code,
+#                     c.card_last_four,
+#                     c.amount,
+#                     c.description,
+#                     c.coding
+#                 FROM
+#                     credit_card_transactions c
+#                 ORDER BY
+#                     c.transaction_date ASC;
+#                 """
+#             )
+#         ).fetchall()
 
-        transactions_list = [
-            {
-                "id": row.id,
-                "date": row.date.strftime("%Y-%m-%d"),
-                "emp_code": row.emp_code,
-                "card_last_four": row.card_last_four,
-                "amount": row.amount,
-                "description": row.description,
-                "coding": row.coding  # Include the coding field here
-            }
-            for row in transactions
-        ]
+#         transactions_list = [
+#             {
+#                 "id": row.id,
+#                 "date": row.date.strftime("%Y-%m-%d"),
+#                 "emp_code": row.emp_code,
+#                 "card_last_four": row.card_last_four,
+#                 "amount": row.amount,
+#                 "description": row.description,
+#                 "coding": row.coding  # Include the coding field here
+#             }
+#             for row in transactions
+#         ]
 
-        return transactions_list
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+#         return transactions_list
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
