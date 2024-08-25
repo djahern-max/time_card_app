@@ -74,7 +74,7 @@ function CreditCardTransactions() {
       });
   };
 
-  const handleRowClick = (empCode) => {
+  const handleViewScheduleClick = (empCode) => {
     navigate(`/schedule/${empCode}`);
   };
 
@@ -102,10 +102,6 @@ function CreditCardTransactions() {
       </div>
 
       <h1>Credit Card Transactions</h1>
-
-      {/* <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button> */}
 
       <div className="filter-container">
         <label htmlFor="employee-select">Filter by Employee Code:</label>
@@ -135,20 +131,14 @@ function CreditCardTransactions() {
             <th>Card Last Four</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Coding</th>
+            <th>Coding (Admin)</th> {/* Admin coding */}
+            <th>Employee Coding</th> {/* Employee coding */}
+            <th>Links</th> {/* New column for links */}
           </tr>
         </thead>
         <tbody>
           {filteredTransactions.map((transaction) => (
-            <tr
-              key={transaction.id}
-              style={{ cursor: "pointer" }}
-              onClick={(e) => {
-                if (e.target.tagName !== "INPUT") {
-                  handleRowClick(transaction.emp_code);
-                }
-              }}
-            >
+            <tr key={transaction.id}>
               <td>{transaction.date}</td>
               <td>{transaction.emp_code}</td>
               <td>{transaction.card_last_four}</td>
@@ -166,6 +156,37 @@ function CreditCardTransactions() {
                   onChange={(e) => handleCodeChange(e, transaction.id)}
                   onClick={(e) => e.stopPropagation()} // Prevent row click when input is clicked
                 />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={transaction.employee_coding || ""}
+                  readOnly
+                />
+              </td>
+              <td>
+                {transaction.receipt_image_path ? (
+                  <a
+                    href={transaction.receipt_image_path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()} // Prevent row click when link is clicked
+                  >
+                    View Receipt
+                  </a>
+                ) : (
+                  "No Receipt Uploaded"
+                )}
+                {" | "}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleViewScheduleClick(transaction.emp_code);
+                  }}
+                >
+                  View Schedule
+                </a>
               </td>
             </tr>
           ))}

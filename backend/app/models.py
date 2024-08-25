@@ -136,6 +136,8 @@ class Receipt(Base):
     filename = Column(String, index=True)
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     text = Column(String)
-    coding = Column(String)  # Add this field to store coding information
+    coding = Column(String)
+    emp_code = Column(String)  # Adding emp_code field
+    transaction_id = Column(Integer, ForeignKey("credit_card_transactions.id"))
 
     user = relationship("User", back_populates="receipts")

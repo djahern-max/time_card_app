@@ -18,6 +18,8 @@ os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 async def upload_receipt(
     file: UploadFile = File(...),
     coding: str = Form(...),  # Accept coding information from the frontend
+    transaction_id: int = Form(...),  # Accept transaction_id from the frontend
+    emp_code: str = Form(...),  # Accept employee code from the frontend
     db: Session = Depends(database.get_db),
     current_user: int = Depends(oauth2.get_current_user)
 ):
@@ -36,7 +38,9 @@ async def upload_receipt(
             user_id=current_user.id,
             filename=file.filename,
             text=text,
-            coding=coding  # Store the coding information
+            coding=coding,  # Store the coding information
+            emp_code=emp_code,
+            transaction_id=transaction_id  # Store the transaction_id to link with the transaction
         )
         db.add(receipt)
         db.commit()
@@ -45,6 +49,5 @@ async def upload_receipt(
         return JSONResponse(content={"status": "success", "text": text, "image_path": file_path})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 
