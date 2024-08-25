@@ -169,9 +169,9 @@ function CreditCardTransactions() {
                 />
               </td>
               <td>
-                {transaction.receipt_image_path ? (
+                {transaction.image_path ? (
                   <a
-                    href={transaction.receipt_image_path}
+                    href={transaction.image_path.replace(/\\/g, "/")}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()} // Prevent row click when link is clicked
