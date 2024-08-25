@@ -20,6 +20,7 @@ class User(Base):
 
     mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
     daily_time_reports = relationship("DailyTimeReport", back_populates="user")
+    receipts = relationship("Receipt", back_populates="user")
 
 class MechanicsTimeReport(Base):
     __tablename__ = "mechanics_time_reports"
@@ -135,3 +136,6 @@ class Receipt(Base):
     filename = Column(String, index=True)
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     text = Column(String)
+    coding = Column(String)  # Add this field to store coding information
+
+    user = relationship("User", back_populates="receipts")

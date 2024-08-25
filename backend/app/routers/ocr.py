@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app import models, database, oauth2
@@ -15,7 +15,12 @@ UPLOAD_DIRECTORY = r"C:\Users\dahern\Documents\ScheduleProjectUploads\Receipt Im
 os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 
 @router.post("/upload_receipt")
-async def upload_receipt(file: UploadFile = File(...), db: Session = Depends(database.get_db), current_user: int = Depends(oauth2.get_current_user)):
+async def upload_receipt(
+    file: UploadFile = File(...),
+    coding: str = Form(...),  # Accept coding information from the frontend
+    db: Session = Depends(database.get_db),
+    current_user: int = Depends(oauth2.get_current_user)
+):
     try:
         # Save the file to the specified directory
         file_path = os.path.join(UPLOAD_DIRECTORY, file.filename)
@@ -26,15 +31,20 @@ async def upload_receipt(file: UploadFile = File(...), db: Session = Depends(dat
         image = Image.open(file_path)
         text = pytesseract.image_to_string(image)
 
-        # Save receipt metadata in the database
-        receipt = models.Receipt(user_id=current_user.id, filename=file.filename, text=text)
+        # Save receipt information in the database
+        receipt = models.Receipt(
+            user_id=current_user.id,
+            filename=file.filename,
+            text=text,
+            coding=coding  # Store the coding information
+        )
         db.add(receipt)
         db.commit()
+        db.refresh(receipt)
 
-        return JSONResponse(content={"status": "success", "text": text})
+        return JSONResponse(content={"status": "success", "text": text, "image_path": file_path})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 
 
