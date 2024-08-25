@@ -9,7 +9,7 @@ from PIL import Image
 router = APIRouter()
 
 # Specify the directory where uploaded files will be stored
-UPLOAD_DIRECTORY = r"C:\Users\dahern\Documents\ScheduleProjectUploads\Receipt Images"
+UPLOAD_DIRECTORY = r"C:\Users\dahern\Documents\ScheduleProjectUploads\Receipt_Images"
 
 # Ensure the directory exists
 os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)

@@ -7,29 +7,12 @@ import pytesseract
 from . import models, oauth2
 from app.database import get_db
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 router = APIRouter()
 
-UPLOAD_DIRECTORY = "C:/Users/dahern/Documents/ScheduleProjectUploads/Receipt Images"
-
-import os
-import logging
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
-from sqlalchemy.orm import Session
-from PIL import Image
-import pytesseract
-from . import models, oauth2
-from .database import get_db
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
-router = APIRouter()
-
-UPLOAD_DIRECTORY = "C:/Users/dahern/Documents/ScheduleProjectUploads/Receipt Images"
+UPLOAD_DIRECTORY = "C:/Users/dahern/Documents/ScheduleProjectUploads/Receipt_Images"
 
 @router.post("/upload_receipt")
 async def upload_receipt(

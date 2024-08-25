@@ -45,11 +45,15 @@ function CreditCardTransactions() {
   const handleCodeChange = (event, transactionId) => {
     const newCode = event.target.value;
     const cursorPosition = event.target.selectionStart;
+    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
 
     fetch(
       `http://127.0.0.1:8000/update_code/${transactionId}?coding=${newCode}`,
       {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
       .then((response) => response.json())
@@ -76,6 +80,35 @@ function CreditCardTransactions() {
       .catch((error) => {
         console.error("Error updating code:", error);
       });
+  };
+
+  const fetchReceipt = (transactionId) => {
+    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+
+    if (!token) {
+      console.error("No token found in localStorage");
+      return;
+    }
+
+    console.log("Token:", token);
+
+    fetch(`http://127.0.0.1:8000/receipt_image/${transactionId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const newWindow = window.open();
+        newWindow.document.write(`<img src="${url}" alt="Receipt Image"/>`);
+      })
+      .catch((error) => console.error("Error fetching receipt:", error));
   };
 
   const handleViewScheduleClick = (empCode) => {
@@ -171,10 +204,11 @@ function CreditCardTransactions() {
               <td>
                 {transaction.image_path ? (
                   <a
-                    href={transaction.image_path.replace(/\\/g, "/")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()} // Prevent row click when link is clicked
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      fetchReceipt(transaction.id);
+                    }}
                   >
                     View Receipt
                   </a>
