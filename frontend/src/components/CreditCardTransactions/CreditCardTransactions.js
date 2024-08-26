@@ -98,6 +98,9 @@ function CreditCardTransactions() {
       },
     })
       .then((response) => {
+        if (response.status === 404) {
+          throw new Error("Receipt not found");
+        }
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -110,9 +113,12 @@ function CreditCardTransactions() {
           `<img src="${url}" alt="Receipt Image" style="width: 500px; height: auto;"/>`
         );
       })
-      .catch((error) => console.error("Error fetching receipt:", error));
+      .catch((error) => {
+        console.error("Error fetching receipt:", error);
+        // Display a placeholder or message if needed
+        alert("No receipt available or error occurred");
+      });
   };
-
   const handleViewScheduleClick = (empCode) => {
     navigate(`/schedule/${empCode}`);
   };
