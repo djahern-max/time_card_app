@@ -171,7 +171,7 @@ function CreditCardTransactions() {
             <th>Amount</th>
             <th>Description</th>
             <th>Coding (Admin)</th>
-            <th>Employee Coding</th>
+            <th>Coding (Employee)</th>
             <th>Links</th>
           </tr>
         </thead>

@@ -148,7 +148,7 @@ function ReceiptUpload() {
             <strong>OCR Text:</strong>
           </p>
           <pre>{receiptData.text}</pre>
-          <p>
+          {/* <p>
             <strong>Image Path:</strong>
           </p>
           <a
@@ -157,7 +157,7 @@ function ReceiptUpload() {
             rel="noopener noreferrer"
           >
             View Image
-          </a>
+          </a> */}
         </div>
       )}
     </div>

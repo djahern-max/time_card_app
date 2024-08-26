@@ -60,6 +60,8 @@ p {
   white-space: pre-wrap; /* Ensures the text wraps within the container */
   font-size: 14px;
   color: #333;
+  max-height: 300px; /* Adjust as needed */
+  overflow-y: auto; /* Add scroll bar for long text */
 }
 
 .receipt-info a {
