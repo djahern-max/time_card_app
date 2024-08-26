@@ -106,7 +106,9 @@ function CreditCardTransactions() {
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
         const newWindow = window.open();
-        newWindow.document.write(`<img src="${url}" alt="Receipt Image"/>`);
+        newWindow.document.write(
+          `<img src="${url}" alt="Receipt Image" style="width: 500px; height: auto;"/>`
+        );
       })
       .catch((error) => console.error("Error fetching receipt:", error));
   };
