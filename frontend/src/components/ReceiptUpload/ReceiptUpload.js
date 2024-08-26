@@ -8,16 +8,17 @@ function ReceiptUpload() {
   const [coding, setCoding] = useState(""); // New state for coding
   const [empCode, setEmpCode] = useState(""); // State for emp_code
   const [transactionId, setTransactionId] = useState(""); // State for transaction_id
+  const [userTransactions, setUserTransactions] = useState([]); // Ensure initial state is an empty array
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUploadStatus("Unauthorized: Please log in.");
+      return;
+    }
+
     // Fetch emp_code based on the logged-in user
     const fetchEmpCode = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setUploadStatus("Unauthorized: Please log in.");
-        return;
-      }
-
       try {
         const response = await fetch("http://127.0.0.1:8000/get_emp_code", {
           headers: {
@@ -26,12 +27,34 @@ function ReceiptUpload() {
         });
         const data = await response.json();
         setEmpCode(data.emp_code);
+        console.log("Current User:", data);
       } catch (error) {
         console.error("Error fetching emp_code:", error);
       }
     };
 
+    // Fetch transactions associated with the logged-in user
+    const fetchUserTransactions = async () => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/get_user_transactions",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        console.log("Fetched transactions:", data); // Log the response data
+        setUserTransactions(Array.isArray(data) ? data : []); // Ensure the response is an array
+      } catch (error) {
+        console.error("Error fetching user transactions:", error);
+        setUserTransactions([]); // Set to empty array on error
+      }
+    };
+
     fetchEmpCode();
+    fetchUserTransactions();
   }, []);
 
   const handleFileChange = (event) => {
@@ -106,12 +129,15 @@ function ReceiptUpload() {
         value={coding}
         onChange={handleCodingChange}
       />
-      <input
-        type="text"
-        placeholder="Enter transaction ID"
-        value={transactionId}
-        onChange={handleTransactionIdChange}
-      />
+      <select value={transactionId} onChange={handleTransactionIdChange}>
+        <option value="">Select Transaction</option>
+        {userTransactions.map((transaction) => (
+          <option key={transaction.id} value={transaction.id}>
+            {transaction.description} - {transaction.amount} on{" "}
+            {transaction.transaction_date}
+          </option>
+        ))}
+      </select>
       <button onClick={handleUpload}>Upload</button>
       <p>{uploadStatus}</p>
 

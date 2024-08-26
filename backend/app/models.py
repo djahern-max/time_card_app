@@ -17,6 +17,7 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     role = Column(SQLAEnum(UserRole), default=UserRole.general)
+    emp_code = Column(String) 
 
     mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
     daily_time_reports = relationship("DailyTimeReport", back_populates="user")

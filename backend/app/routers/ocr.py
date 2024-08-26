@@ -5,6 +5,13 @@ from sqlalchemy.orm import Session
 from app import models, database, oauth2
 import pytesseract
 from PIL import Image
+from app.database import get_db
+from app.models import User
+from sqlalchemy.sql import func
+import logging
+
+logger = logging.getLogger("uvicorn")
+
 
 router = APIRouter()
 
@@ -59,3 +66,23 @@ async def upload_receipt(
         return JSONResponse(content={"status": "success", "text": text, "image_path": file_path})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/get_emp_code")
+def get_emp_code(current_user: int = Depends(oauth2.get_current_user), db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == current_user.id).first()
+    if user:
+        return {"emp_code": user.emp_code}
+    else:
+        raise HTTPException(status_code=404, detail="User not found")
+
+@router.get("/get_user_transactions")
+def get_user_transactions(current_user: User = Depends(oauth2.get_current_user), db: Session = Depends(get_db)):
+    print(f"Current User: {current_user.username}, Emp Code: {current_user.emp_code}")
+    transactions = db.query(models.CreditCardTransaction).filter(models.CreditCardTransaction.emp_code == current_user.emp_code).all()
+    return transactions
+
+@router.get("/get_user_transactions")
+def get_user_transactions(current_user: User = Depends(oauth2.get_current_user), db: Session = Depends(get_db)):
+    transactions = db.query(models.CreditCardTransaction).filter(models.CreditCardTransaction.emp_code == current_user.emp_code.strip()).all()
+    return transactions
+
