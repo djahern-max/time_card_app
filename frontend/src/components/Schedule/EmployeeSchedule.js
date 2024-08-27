@@ -57,7 +57,7 @@ function EmployeeSchedule() {
                 <br />
                 <b>Hours Worked:</b> {job.hours_worked || "N/A"}
                 <br />
-                <b>Rate:</b> {job.rate || "N/A"}
+                {/* <b>Rate:</b> {job.rate || "N/A"} */}
               </li>
             ))}
           </ul>

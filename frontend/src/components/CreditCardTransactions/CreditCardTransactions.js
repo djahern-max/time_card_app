@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
 import logout from "../../assets/logout.svg";
+import download from "../../assets/download.svg";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
@@ -138,11 +139,43 @@ function CreditCardTransactions() {
     return <div>No transactions found.</div>;
   }
 
+  const handleExport = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in.");
+      return;
+    }
+
+    fetch("http://127.0.0.1:8000/export_transactions", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "credit_card_transactions.csv";
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error exporting data:", error);
+      });
+  };
+
   return (
     <div className="credit-card-transactions-container">
       <div className="logout-link">
         <a href="#" onClick={handleLogout}>
           <img src={logout} alt="Logout" className="logout-icon" />
+        </a>
+      </div>
+
+      <div className="download-link">
+        <a href="#" onClick={handleExport}>
+          <img src={download} alt="Download" className="download-icon" />
         </a>
       </div>
 
