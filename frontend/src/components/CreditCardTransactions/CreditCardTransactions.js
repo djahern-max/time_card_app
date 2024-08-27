@@ -164,10 +164,6 @@ function CreditCardTransactions() {
         </select>
       </div>
 
-      <p className="clickable-row-note">
-        Click on a row to view the employee's schedule.
-      </p>
-
       <table className="transactions-table">
         <thead>
           <tr>

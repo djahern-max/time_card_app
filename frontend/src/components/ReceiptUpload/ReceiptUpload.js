@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./ReceiptUpload.css";
+import { useNavigate } from "react-router-dom";
+import logoutIcon from "../../assets/logout.svg";
+import uploadIcon from "../../assets/upload.svg";
 
 function ReceiptUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const [receiptData, setReceiptData] = useState(null);
-  const [coding, setCoding] = useState(""); // New state for coding
-  const [empCode, setEmpCode] = useState(""); // State for emp_code
-  const [transactionId, setTransactionId] = useState(""); // State for transaction_id
-  const [userTransactions, setUserTransactions] = useState([]); // Ensure initial state is an empty array
+  const [coding, setCoding] = useState("");
+  const [empCode, setEmpCode] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [userTransactions, setUserTransactions] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,7 +21,6 @@ function ReceiptUpload() {
       return;
     }
 
-    // Fetch emp_code based on the logged-in user
     const fetchEmpCode = async () => {
       try {
         const response = await fetch("http://127.0.0.1:8000/get_emp_code", {
@@ -27,13 +30,11 @@ function ReceiptUpload() {
         });
         const data = await response.json();
         setEmpCode(data.emp_code);
-        console.log("Current User:", data);
       } catch (error) {
         console.error("Error fetching emp_code:", error);
       }
     };
 
-    // Fetch transactions associated with the logged-in user
     const fetchUserTransactions = async () => {
       try {
         const response = await fetch(
@@ -45,11 +46,10 @@ function ReceiptUpload() {
           }
         );
         const data = await response.json();
-        console.log("Fetched transactions:", data); // Log the response data
-        setUserTransactions(Array.isArray(data) ? data : []); // Ensure the response is an array
+        setUserTransactions(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching user transactions:", error);
-        setUserTransactions([]); // Set to empty array on error
+        setUserTransactions([]);
       }
     };
 
@@ -70,10 +70,7 @@ function ReceiptUpload() {
   };
 
   const handleUpload = () => {
-    console.log("Upload function triggered");
-
     const token = localStorage.getItem("token");
-    console.log("Token:", token);
 
     if (!token) {
       setUploadStatus("Unauthorized: Please log in.");
@@ -85,14 +82,12 @@ function ReceiptUpload() {
       return;
     }
 
-    console.log("Proceeding with upload...");
-
     const formData = new FormData();
     formData.append("file", selectedFile);
-    formData.append("coding", coding); // Include coding information
-    formData.append("transaction_id", transactionId); // Add transaction_id
-    formData.append("employee_coding", coding); // Add employee_coding
-    formData.append("emp_code", empCode); // Add emp_code
+    formData.append("coding", coding);
+    formData.append("transaction_id", transactionId);
+    formData.append("employee_coding", coding);
+    formData.append("emp_code", empCode);
 
     fetch("http://127.0.0.1:8000/upload_receipt", {
       method: "POST",
@@ -111,7 +106,7 @@ function ReceiptUpload() {
       })
       .then((data) => {
         setUploadStatus("Upload successful!");
-        setReceiptData(data); // Store the receipt data for display
+        setReceiptData(data);
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -119,8 +114,27 @@ function ReceiptUpload() {
       });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <div className="receipt-upload-container">
+      <div className="icon-container">
+        <img
+          src={logoutIcon}
+          className="logout-icon"
+          alt="Logout"
+          onClick={handleLogout}
+        />
+        <img
+          src={uploadIcon}
+          className="upload-icon"
+          alt="Upload"
+          onClick={handleUpload}
+        />
+      </div>
       <h2>Upload Receipt</h2>
       <input type="file" accept="image/*" onChange={handleFileChange} />
       <input
@@ -139,7 +153,8 @@ function ReceiptUpload() {
         ))}
       </select>
       <button onClick={handleUpload}>Upload</button>
-      <p>{uploadStatus}</p>
+
+      {uploadStatus && <p className="upload-success-message">{uploadStatus}</p>}
 
       {receiptData && (
         <div className="receipt-info">
@@ -148,16 +163,6 @@ function ReceiptUpload() {
             <strong>OCR Text:</strong>
           </p>
           <pre>{receiptData.text}</pre>
-          {/* <p>
-            <strong>Image Path:</strong>
-          </p>
-          <a
-            href={receiptData.image_path}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Image
-          </a> */}
         </div>
       )}
     </div>
