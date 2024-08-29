@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./GeneralTimeReport.css"; // Import the CSS file
+import logout from "../../assets/logout.svg";
 
 function GeneralTimeReport() {
   const [formData, setFormData] = useState({
@@ -43,8 +44,12 @@ function GeneralTimeReport() {
 
   return (
     <div className="general-form-container">
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
+      <button onClick={handleLogout} className=".general-form .logout-button">
+        <img
+          src={logout}
+          alt="Logout"
+          className=".general-form .logout-button:hover"
+        />
       </button>
       <form className="general-form" onSubmit={handleSubmit}>
         <h1>Daily Time Report</h1>
@@ -118,7 +123,11 @@ function GeneralTimeReport() {
           onChange={handleChange}
           className="form-input"
         />
-        <button type="submit" className="form-button">
+        <button
+          type="submit"
+          className="form-button"
+          style={{ fontSize: "12px" }}
+        >
           Submit
         </button>
       </form>

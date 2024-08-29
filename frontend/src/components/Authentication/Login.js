@@ -32,7 +32,7 @@ function Login() {
           navigate("/admin-dashboard");
         } else if (role === "mechanic") {
           console.log("Navigating to Mechanics Dasshboard");
-          navigate("/mechanics-dashboard");
+          navigate("/mechanic-dashboard");
         } else {
           console.log("Navigating to Daily Time Report");
           navigate("/general-dashboard");

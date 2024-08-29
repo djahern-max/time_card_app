@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./MechanicsTimeReport.css"; // Import the CSS file
+import "./MechanicsTimeReport.css";
+import logout from "../../assets/logout.svg";
 
 function MechanicsTimeReport() {
   const [formData, setFormData] = useState({
@@ -42,9 +43,10 @@ function MechanicsTimeReport() {
 
   return (
     <div className="mechanics-form-container">
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
+      <div class="button-container">
+        <button class="logout-button">Logout</button>
+      </div>
+
       <form className="mechanics-form" onSubmit={handleSubmit}>
         <h1>Mechanics Time Report</h1>
         <input

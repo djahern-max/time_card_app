@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";
-import logout from "../../assets/logout.svg";
-import download from "../../assets/download.svg";
+// import logout from "../../assets/logout.svg";
+// import download from "../../assets/download.svg";
+import NavigationBar from "../Navigation/NavigationBar";
 
 function CreditCardTransactions() {
   const [transactions, setTransactions] = useState([]);
@@ -120,6 +121,7 @@ function CreditCardTransactions() {
         alert("No receipt available or error occurred");
       });
   };
+
   const handleViewScheduleClick = (empCode) => {
     navigate(`/schedule/${empCode}`);
   };
@@ -128,16 +130,6 @@ function CreditCardTransactions() {
     localStorage.removeItem("token"); // Remove the token from localStorage
     navigate("/login"); // Redirect to the login page
   };
-
-  const filteredTransactions = selectedEmpCode
-    ? transactions.filter(
-        (transaction) => transaction.emp_code === selectedEmpCode
-      )
-    : transactions;
-
-  if (transactions.length === 0) {
-    return <div>No transactions found.</div>;
-  }
 
   const handleExport = () => {
     const token = localStorage.getItem("token");
@@ -165,20 +157,33 @@ function CreditCardTransactions() {
       });
   };
 
+  const filteredTransactions = selectedEmpCode
+    ? transactions.filter(
+        (transaction) => transaction.emp_code === selectedEmpCode
+      )
+    : transactions;
+
+  if (transactions.length === 0) {
+    return <div>No transactions found.</div>;
+  }
+
   return (
     <div className="credit-card-transactions-container">
-      <div className="logout-link">
-        <a href="#" onClick={handleLogout}>
-          <img src={logout} alt="Logout" className="logout-icon" />
-        </a>
-      </div>
-
-      <div className="download-link">
-        <a href="#" onClick={handleExport}>
-          <img src={download} alt="Download" className="download-icon" />
-        </a>
-      </div>
-
+      {/* <div className="header-container">
+        <div className="left-container">
+          <button className="logout-button" onClick={handleLogout}>
+            <img src={logout} alt="Logout" className="button-icon" />
+            Logout
+          </button>
+        </div>
+        <div className="right-container">
+          <button className="download-button" onClick={handleExport}>
+            <img src={download} alt="Download" className="button-icon" />
+            Download CSV
+          </button>
+        </div>
+      </div> */}
+      <NavigationBar />
       <h1>Credit Card Transactions</h1>
 
       <div className="filter-container">

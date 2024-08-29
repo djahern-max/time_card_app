@@ -9,7 +9,6 @@ html {
 .credit-card-transactions-container {
   margin: 20px;
   font-family: Arial, sans-serif;
-  padding-top: 40px; /* Add padding to avoid overlap with the fixed header */
   max-height: 100vh; /* Make sure the container can fill the screen height */
   overflow-y: auto; /* Enable scrolling if content exceeds container height */
   height: calc(
@@ -88,34 +87,29 @@ html {
   color: #2980b9;
 }
 
-.credit-card-transactions-container {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* Adjust as needed */
+.logout-icon {
+  width: 30px; /* Increased size */
+  height: 30px; /* Increased size */
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 .logout-link {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  left: 10px; /* Adjust as needed */
-  padding-top: 15px;
+  display: block;
+  margin-bottom: 20px;
+  text-align: right;
 }
 
-.download-link {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
-  padding-top: 15px;
+.logout-link a {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
-.logout-icon {
-  width: 40px; /* Set a fixed width */
-  height: 40px; /* Set a fixed height */
-}
-
-.download-icon {
-  width: 48px; /* Set a fixed width */
-  height: 48px; /* Set a fixed height */
+.logout-link a:hover {
+  text-decoration: underline;
 }
 
 img.receipt-image {
@@ -123,4 +117,40 @@ img.receipt-image {
   max-height: 800px; /* or whatever height you want */
   width: auto;
   height: auto;
+}
+
+/* Header Container */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Space between left and right containers */
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px; /* Add padding to give some space on the sides */
+}
+
+/* Common Button Styles */
+.logout-button,
+.download-button {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover,
+.download-button:hover {
+  background-color: #1f6391;
+}
+
+/* Icon Styles */
+.button-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
 }
