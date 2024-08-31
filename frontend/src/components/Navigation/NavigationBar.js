@@ -1,13 +1,22 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import "./NavigationBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faHome,
+  faSignOutAlt,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+
+library.add(faHome, faSignOutAlt, faFileExport);
 
 const NavigationBar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Adjust according to your auth logic
-    navigate("/login"); // Use navigate function instead of history.push
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   const handleExport = async () => {
@@ -52,17 +61,17 @@ const NavigationBar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">CrewOne2</Link>
+      <div className="icon-buttons">
+        <FontAwesomeIcon
+          icon={faHome}
+          size="2x"
+          onClick={() => navigate("/home")}
+        />
       </div>
       <ul className="navbar-links"></ul>
       <div className="navbar-actions">
-        <button className="navbar-logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <button className="navbar-export" onClick={handleExport}>
-          Export
-        </button>
+        <FontAwesomeIcon icon={faFileExport} size="2x" onClick={handleExport} />
+        <FontAwesomeIcon icon={faSignOutAlt} size="2x" onClick={handleLogout} />
       </div>
     </nav>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./MechanicsTimeReport.css";
-import logout from "../../assets/logout.svg";
+import "./MechanicsTimeReport.css"; // Import the updated CSS file
+import SimpleNavBar from "../Navigation/SimpleNavBar"; // Ensure this path is correct
 
 function MechanicsTimeReport() {
   const [formData, setFormData] = useState({
@@ -19,8 +19,8 @@ function MechanicsTimeReport() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    navigate("/login"); // Redirect to the login page
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   const handleChange = (e) => {
@@ -42,12 +42,10 @@ function MechanicsTimeReport() {
   };
 
   return (
-    <div className="mechanics-form-container">
-      <div class="button-container">
-        <button class="logout-button">Logout</button>
-      </div>
+    <div className="general-form-container">
+      <SimpleNavBar />
 
-      <form className="mechanics-form" onSubmit={handleSubmit}>
+      <form className="general-form" onSubmit={handleSubmit}>
         <h1>Mechanics Time Report</h1>
         <input
           type="text"

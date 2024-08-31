@@ -1,4 +1,3 @@
-/* MechanicsTimeReport.css */
 html,
 body {
   height: 100%;
@@ -6,99 +5,107 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Light grey background similar to the login screen */
+  background-color: #f0f0f0; /* Light grey background */
   font-family: Arial, sans-serif;
+  overflow: hidden; /* Prevent body from scrolling */
 }
 
-.mechanics-form-container {
-  width: 400px;
-  padding: 20px;
-  border: 1px solid #ddd; /* Light grey border similar to the login form */
-  border-radius: 10px; /* Slightly more rounded corners for a modern look */
-  background-color: #ffffff;
+.general-form-container {
+  width: 90%; /* Adjust width to fit smaller screens */
+  max-width: 400px; /* Maximum width for larger screens */
+  max-height: calc(
+    100vh - 40px
+  ); /* Ensure the container does not exceed the viewport height minus padding */
+  padding: 32px;
+  padding-top: 5px; /* Add padding to the top */
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 10px;
+  background-color: #ffffff; /* White background */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  position: relative; /* Ensure the logout button is positioned relative to this container */
+  position: relative; /* Ensure absolute positioning of children */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
+@media only screen and (max-width: 680px) {
+  .general-form-container {
+    padding-top: 60px; /* Extra padding for smaller screens */
+    padding-bottom: 60px; /* Extra padding for smaller screens */
+    max-height: calc(
+      100vh - 120px
+    ); /* Adjust max-height to account for extra padding */
+  }
 }
 
-.logout-button {
-  background-color: #1e90ff; /* Match the color of the Submit button */
+.general-form .logout-button:hover {
+  background-color: #c82333;
+}
+
+.general-form .logout-button {
+  padding: 6px;
+  background-color: #dc3545;
   color: white;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 10px 0;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 4px; /* Optional: Adds rounded corners */
-  width: 100px; /* Ensures consistent button width */
+  font-size: 14px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
-.logout-button:hover {
-  background-color: #006bb3; /* Darker shade for hover effect */
-}
-
-.mechanics-form {
+.general-form {
   display: flex;
   flex-direction: column;
 }
 
-.mechanics-form h1 {
+.general-form h1 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px; /* Slightly larger font for the heading */
   color: #333333;
 }
 
-.mechanics-form label {
+.general-form label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
   color: #555555;
 }
 
-.mechanics-form input,
-.mechanics-form textarea {
+.general-form input,
+.general-form textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ddd; /* Light grey border for inputs */
-  border-radius: 5px; /* Rounded corners to match the form */
+  border-radius: 5px; /* Rounded corners */
   box-sizing: border-box;
   font-size: 16px;
   background-color: #f9f9f9; /* Slightly lighter background inside the inputs */
 }
 
-.mechanics-form textarea {
+.general-form textarea {
   height: 80px;
   resize: vertical;
 }
 
-.mechanics-form button {
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-}
-
-.mechanics-form button:hover {
-  background-color: #0056b3;
-}
-
-.mechanics-form .error {
+.general-form .error {
   color: red;
   margin-bottom: 10px;
   text-align: center;
   font-weight: bold;
+}
+
+.form-button {
+  font-size: 36px; /* Adjust the font size as needed */
+  padding: 10px 20px; /* Optional: Adjust padding for better appearance */
+  background-color: #007bff; /* Optional: Add background color */
+  color: white; /* Optional: Add text color */
+  border: none; /* Optional: Remove border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  cursor: pointer; /* Optional: Add cursor pointer */
+}
+
+.form-button:hover {
+  background-color: #0056b3; /* Optional: Add hover effect */
 }

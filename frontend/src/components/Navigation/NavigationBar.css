@@ -53,6 +53,19 @@
 .icon-buttons .fa,
 .navbar-actions .fa {
   color: white; /* Ensures icons are white */
+  cursor: pointer;
+}
+
+.icon-buttons .svg-inline--fa,
+.navbar-actions .svg-inline--fa {
+  cursor: pointer;
+}
+
+.icon-buttons .fa:hover,
+.navbar-actions .fa:hover,
+.icon-buttons .svg-inline--fa:hover,
+.navbar-actions .svg-inline--fa:hover {
+  opacity: 0.8;
 }
 
 .navbar-logout {
