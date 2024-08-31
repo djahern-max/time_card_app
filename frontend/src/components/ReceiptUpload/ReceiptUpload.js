@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ReceiptUpload.css";
 import { useNavigate } from "react-router-dom";
-import logoutIcon from "../../assets/logout.svg";
-import uploadIcon from "../../assets/upload.svg";
+import SimpleNavBar from "../Navigation/SimpleNavBar";
 
 function ReceiptUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -121,20 +120,7 @@ function ReceiptUpload() {
 
   return (
     <div className="receipt-upload-container">
-      <div className="icon-container">
-        <img
-          src={logoutIcon}
-          className="logout-icon"
-          alt="Logout"
-          onClick={handleLogout}
-        />
-        <img
-          src={uploadIcon}
-          className="upload-icon"
-          alt="Upload"
-          onClick={handleUpload}
-        />
-      </div>
+      <SimpleNavBar />
       <h2>Upload Receipt</h2>
       <input type="file" accept="image/*" onChange={handleFileChange} />
       <input
