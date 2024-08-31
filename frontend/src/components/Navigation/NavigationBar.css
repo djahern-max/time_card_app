@@ -2,9 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f2f2f2(185, 181, 181, 0.8); /* Updated with opacity */
+  background-color: #f2f2f2(
+    185,
+    181,
+    181,
+    0.8
+  ); /* Corrected background color with opacity */
   padding: 10px 20px;
-  color: white;
+  color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(
     5px
   ); /* Optional: adds a slight blur effect behind the navbar */
@@ -20,6 +25,12 @@
 .navbar-links {
   list-style: none;
   display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 10px;
 }
 
 .navbar-links li a {
@@ -32,9 +43,16 @@
   color: #ddd;
 }
 
-.navbar-actions {
+.navbar-actions,
+.icon-buttons {
   display: flex;
+  align-items: center;
   gap: 10px; /* Adjust the spacing between the buttons */
+}
+
+.icon-buttons .fa,
+.navbar-actions .fa {
+  color: white; /* Ensures icons are white */
 }
 
 .navbar-logout {

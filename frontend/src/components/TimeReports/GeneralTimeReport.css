@@ -16,7 +16,7 @@ body {
   max-height: calc(
     100vh - 40px
   ); /* Ensure the container does not exceed the viewport height minus padding */
-  padding: 20px;
+  padding: 32px;
   padding-top: 5px; /* Add padding to the top */
   border: 1px solid #ddd; /* Light grey border */
   border-radius: 10px;
