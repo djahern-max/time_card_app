@@ -126,11 +126,6 @@ function CreditCardTransactions() {
     navigate(`/schedule/${empCode}`);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove the token from localStorage
-    navigate("/login"); // Redirect to the login page
-  };
-
   const handleExport = () => {
     const token = localStorage.getItem("token");
     if (!token) {

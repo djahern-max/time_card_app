@@ -7,21 +7,39 @@ body {
   align-items: center;
   background-color: #f0f0f0; /* Light grey background */
   font-family: Arial, sans-serif;
+  overflow: hidden; /* Prevent body from scrolling */
 }
 
 .general-form-container {
-  width: 400px;
+  width: 90%; /* Adjust width to fit smaller screens */
+  max-width: 400px; /* Maximum width for larger screens */
+  max-height: calc(
+    100vh - 40px
+  ); /* Ensure the container does not exceed the viewport height minus padding */
   padding: 20px;
+  padding-top: 5px; /* Add padding to the top */
   border: 1px solid #ddd; /* Light grey border */
   border-radius: 10px;
   background-color: #ffffff; /* White background */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
   position: relative; /* Ensure absolute positioning of children */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
+}
+
+@media only screen and (max-width: 680px) {
+  .general-form-container {
+    padding-top: 60px; /* Extra padding for smaller screens */
+    padding-bottom: 60px; /* Extra padding for smaller screens */
+    max-height: calc(
+      100vh - 120px
+    ); /* Adjust max-height to account for extra padding */
+  }
 }
 
 .general-form .logout-button:hover {
   background-color: #c82333;
 }
+
 .general-form .logout-button {
   padding: 6px;
   background-color: #dc3545;
@@ -71,24 +89,23 @@ body {
   resize: vertical;
 }
 
-/* .general-form button {
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-} */
-
-/* .general-form button:hover {
-  background-color: #0056b3;
-} */
-
 .general-form .error {
   color: red;
   margin-bottom: 10px;
   text-align: center;
   font-weight: bold;
+}
+
+.form-button {
+  font-size: 36px; /* Adjust the font size as needed */
+  padding: 10px 20px; /* Optional: Adjust padding for better appearance */
+  background-color: #007bff; /* Optional: Add background color */
+  color: white; /* Optional: Add text color */
+  border: none; /* Optional: Remove border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  cursor: pointer; /* Optional: Add cursor pointer */
+}
+
+.form-button:hover {
+  background-color: #0056b3; /* Optional: Add hover effect */
 }

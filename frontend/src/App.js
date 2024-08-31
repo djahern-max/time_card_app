@@ -4,7 +4,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
-import DailyTimeReport from "./components/TimeReports/DailyTimeReport";
+import GeneralTimeReport from "./components/TimeReports/GeneralTimeReport";
 import MechanicsTimeReport from "./components/TimeReports/MechanicsTimeReport";
 import Upload from "./components/Upload/Upload";
 import CreditCardTransactions from "./components/CreditCardTransactions/CreditCardTransactions";
@@ -25,7 +25,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/mechanic-dashboard" element={<MechanicDashboard />} />
         <Route path="/general-dashboard" element={<GeneralDashboard />} />
-        <Route path="/daily-time-report" element={<DailyTimeReport />} />
+        <Route path="/general-time-report" element={<GeneralTimeReport />} />
         <Route
           path="/mechanics-time-report"
           element={<MechanicsTimeReport />}

@@ -60,9 +60,6 @@ const NavigationBar = () => {
         <button className="navbar-logout" onClick={handleLogout}>
           Logout
         </button>
-        <button className="navbar-export" onClick={handleExport}>
-          Export
-        </button>
       </div>
     </nav>
   );

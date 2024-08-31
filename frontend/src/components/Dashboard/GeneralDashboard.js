@@ -8,7 +8,7 @@ function GeneralDashboard() {
       <h1>General Employee Dashboard</h1>
       <ul className="dashboard-menu">
         <li className="dashboard-link">
-          <Link to="/daily-time-report">Enter Timecard</Link>
+          <Link to="/general-time-report">Enter Timecard</Link>
         </li>
         <li className="dashboard-link">
           <Link to="/upload-receipt">Upload Receipt</Link>
