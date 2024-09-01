@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./GeneralTimeReport.css"; // Import the CSS file
+import "./TimeReport.css";
 import SimpleNavBar from "../Navigation/SimpleNavBar";
 
 function GeneralTimeReport() {
@@ -80,11 +80,11 @@ function GeneralTimeReport() {
           placeholder="Job Name"
           className="form-input"
         />
-        <textarea
+        <input
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Provide Phase # if Known.  If not provide description of work performed."
+          placeholder="Provide Phase # if Known."
           className="form-textarea"
         />
         <input
@@ -118,6 +118,7 @@ function GeneralTimeReport() {
           onChange={handleChange}
           className="form-input"
         />
+        <br />
         <button type="submit" className="form-button">
           Submit
         </button>

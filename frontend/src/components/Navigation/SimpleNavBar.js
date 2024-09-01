@@ -21,7 +21,7 @@ const NavigationBar = () => {
         <FontAwesomeIcon
           icon={faHome}
           size="2x"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
         />
       </div>
       <ul className="navbar-links"></ul>

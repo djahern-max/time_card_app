@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./MechanicsTimeReport.css"; // Import the updated CSS file
-import SimpleNavBar from "../Navigation/SimpleNavBar"; // Ensure this path is correct
+import "./TimeReport.css";
+import SimpleNavBar from "../Navigation/SimpleNavBar";
 
 function MechanicsTimeReport() {
   const [formData, setFormData] = useState({
@@ -103,13 +103,14 @@ function MechanicsTimeReport() {
           placeholder="Work Order Number"
           className="form-input"
         />
-        <textarea
+        <input
           name="description"
           value={formData.description}
           onChange={handleChange}
           placeholder="Description"
           className="form-textarea"
         />
+        <br />
         <button type="submit" className="form-button">
           Submit
         </button>
