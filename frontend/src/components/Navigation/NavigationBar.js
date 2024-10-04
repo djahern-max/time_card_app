@@ -1,3 +1,4 @@
+//NavigationBar.js is a component that displays a navigation bar with icons for home, export, and logout actions. The component uses FontAwesome icons for the buttons and provides functionality to export credit card transactions to a CSV file and log out of the application.
 import React from "react";
 import "./NavigationBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

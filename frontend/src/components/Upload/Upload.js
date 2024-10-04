@@ -1,3 +1,5 @@
+//Upload.js is a component that allows users to upload data files to the application. The component provides a file input field for selecting the file to upload and a dropdown menu for selecting the dataset type. When the user clicks the "Upload" button, the file is sent to the backend server for processing. The component displays a success or error message based on the server's response.
+
 import React, { useState } from "react";
 import "./upload.css";
 

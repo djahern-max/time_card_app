@@ -1,3 +1,4 @@
+//Login.js is a component that allows users to log in to the application. It uses the login function from the auth.js file to send a POST request to the backend API with the user's username and password. If the login is successful, the user's token and role are stored in the local storage, and the user is redirected to the appropriate dashboard based on their role.
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../api/auth";

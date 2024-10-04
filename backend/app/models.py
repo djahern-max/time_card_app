@@ -1,3 +1,4 @@
+#models.py will contain the SQLAlchemy models for the database tables. We will define the following models:
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean, Enum as SQLAEnum, Numeric, Text, DateTime, func
 from sqlalchemy.orm import relationship
 from .database import Base
@@ -22,6 +23,7 @@ class User(Base):
     mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
     daily_time_reports = relationship("DailyTimeReport", back_populates="user")
     receipts = relationship("Receipt", back_populates="user")
+    bulk_uploads = relationship("BulkReceiptUpload", back_populates="admin_user")
 
 class MechanicsTimeReport(Base):
     __tablename__ = "mechanics_time_reports"
@@ -129,6 +131,8 @@ class CreditCardTransaction(Base):
     coding = Column(Text, nullable=True)  # Admin coding
     employee_coding = Column(Text, nullable=True)  # Employee coding
     image_path = Column(String, nullable=True)  # Path to the receipt image
+    bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"), nullable=True)
+    bulk_upload = relationship("BulkReceiptUpload")
 
     receipts = relationship("Receipt", back_populates="transaction")
 
@@ -146,6 +150,26 @@ class Receipt(Base):
     coding = Column(String)
     employee_coding = Column(String)
     image_path = Column(String)
+    bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"), nullable=True)
+    bulk_upload = relationship("BulkReceiptUpload")
+
+
 
     transaction = relationship("CreditCardTransaction", back_populates="receipts")
     user = relationship("User", back_populates="receipts")
+
+class BulkReceiptUpload(Base):
+    __tablename__ = "bulk_receipt_uploads"
+
+    id = Column(Integer, primary_key=True, index=True)
+    admin_user_id = Column(Integer, ForeignKey("users.id"))
+    upload_date = Column(DateTime(timezone=True), server_default=func.now())
+    file_name = Column(String)
+    status = Column(String)  # e.g., 'processing', 'completed', 'failed'
+    total_receipts = Column(Integer)
+    matched_receipts = Column(Integer)
+    unmatched_receipts = Column(Integer)
+
+    admin_user = relationship("User", back_populates="bulk_uploads")
+
+

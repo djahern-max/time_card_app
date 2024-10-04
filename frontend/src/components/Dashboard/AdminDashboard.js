@@ -1,3 +1,4 @@
+// AdminDashboard.js
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AdminDashboard.css";
@@ -15,6 +16,9 @@ function Dashboard() {
         </Link>
         <Link to="/all-employees-schedule" className="dashboard-link">
           View All Employees' Schedule
+        </Link>
+        <Link to="/bulk-receipt-upload" className="dashboard-link">
+          Bulk Receipt Upload
         </Link>
       </div>
       <div className="dashboard-logout">

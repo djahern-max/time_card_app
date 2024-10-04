@@ -1,3 +1,4 @@
+# schedule.py will contain the route for getting the schedule of an employee.
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
@@ -22,7 +23,7 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
                 t.phase
             FROM timecards t
             WHERE 
-                t.emp_code = :emp_code
+                TRIM(UPPER(t.emp_code)) = TRIM(UPPER(:emp_code))
             ORDER BY t.date ASC;
         """)
         results = db.execute(query, {'emp_code': emp_code}).fetchall()
@@ -36,14 +37,13 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
             "jobs": []
         }
 
-        # Group jobs by date
         jobs_by_date = {}
         for row in results:
             if row.date not in jobs_by_date:
                 jobs_by_date[row.date] = []
             jobs_by_date[row.date].append({
-                "job": row.job if row.job else None,
-                "phase": row.phase if row.phase else None,
+                "job": row.job if row.job else "Unknown",
+                "phase": row.phase if row.phase else "Unknown",
                 "hours_worked": row.hours_worked if row.hours_worked is not None else None,
                 "rate": row.rate if row.rate is not None else None
             })
@@ -60,37 +60,3 @@ def get_schedule(emp_code: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
     
-# @router.get("/schedule", response_model=List[schemas.EmployeeSchedule])
-# def get_schedule(db: Session = Depends(get_db)):
-#     try:
-#         query = text("""
-#             SELECT 
-#                 t.emp_code,
-#                 t.name,
-#                 t.date,
-#                 t.job,
-#                 t.phase
-#             FROM timecards t
-#             ORDER BY t.date ASC;
-#         """)
-#         results = db.execute(query).fetchall()
-
-#         schedule_list = [
-#             {
-#                 "emp_code": row.emp_code,
-#                 "name": row.name,
-#                 "date": str(row.date),
-#                 "jobs": [
-#                     {
-#                         "job": row.job,
-#                         "phase": row.phase
-#                     }
-#                 ]
-#             }
-#             for row in results
-#         ]
-
-#         return schedule_list
-
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))

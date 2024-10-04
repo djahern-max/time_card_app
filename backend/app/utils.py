@@ -1,3 +1,4 @@
+#utils.py will contain helper functions that are used across the application.
 from passlib.context import CryptContext
 
 # Set up the CryptContext

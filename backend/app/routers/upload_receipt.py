@@ -1,3 +1,4 @@
+# upload_receipt.py contains the route for uploading a receipt image and associating it with a credit card transaction.
 import os
 import logging
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form

@@ -1,3 +1,4 @@
+//GeneralDashoard.js is a component that serves as the main dashboard for a general employee user. It provides links to different functionalities, such as entering timecards, uploading receipts, and viewing schedules. The component is similar to the AdminDashboard component but tailored for general employees.
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AdminDashboard.css"; // Assuming common styling for dashboards

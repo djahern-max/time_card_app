@@ -1,3 +1,4 @@
+//MechanicsTimeReport.js is a component that allows mechanics to submit their time reports. It includes a form with fields for the mechanic's name, date, hours worked, equipment, equipment number, cost category, work order number, and description. The component uses the useState hook to manage form data and the useNavigate hook to redirect the user to the login page after logging out. The component also uses the axios library to make POST requests to the backend API to submit the time report.
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

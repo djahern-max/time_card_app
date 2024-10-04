@@ -1,3 +1,4 @@
+//GenaralTimeReport.js is a component that allows general employees to submit their daily time reports. The component includes a form with fields for the employee's name, date, hours worked, job name, description, equipment, loads, and pit. Upon submission, the form data is sent to the backend API endpoint for processing and storage in the database. The component also includes a navigation bar for easy access to other functionalities.
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

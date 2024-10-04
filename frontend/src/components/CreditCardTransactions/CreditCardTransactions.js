@@ -1,3 +1,4 @@
+// CreditCardTransactions.js is a component that displays credit card transactions for employees. It fetches the transactions from the backend API and allows the user to filter the transactions by employee code. The component also allows the user to update the coding for each transaction and view the receipt image associated with each transaction. The component includes a button to export the transactions to a CSV file.
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreditCardTransactions.css";

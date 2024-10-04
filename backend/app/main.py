@@ -1,3 +1,4 @@
+# main.py is the entry point of the FastAPI application. It creates the FastAPI instance and includes the routers.
 from fastapi import FastAPI
 from .routers import auth, timecards, upload, schedule, credit_card_transactions, receipt_image, transactions
 from .database import engine

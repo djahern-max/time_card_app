@@ -1,3 +1,4 @@
+//EmployeeSchedule.js is a component that displays the schedule for a specific employee. It fetches the schedule data from the backend API based on the employee code provided in the URL parameters. The component allows the user to select a date from a dropdown menu and displays the jobs assigned to the employee for that date.
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./EmployeeSchedule.css"; // Ensure this file is correctly imported

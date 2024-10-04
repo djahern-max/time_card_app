@@ -1,3 +1,4 @@
+//ReceiptUpload.js is a component that allows users to upload receipts and associate them with specific transactions. The component includes fields for selecting a file, entering coding information, and selecting a transaction to associate the receipt with. The uploaded receipt is processed using OCR to extract text information. The component also displays the extracted text information and provides feedback on the upload status.
 import React, { useState, useEffect } from "react";
 import "./ReceiptUpload.css";
 import { useNavigate } from "react-router-dom";

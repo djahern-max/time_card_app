@@ -1,3 +1,4 @@
+// Register.js is a component that allows users to register for an account. It includes a form with fields for username, password, and role. The user can select their role from a dropdown menu with options for "General Employee" and "Mechanic". The component also includes error handling for registration failures and a link to the login page for users who already have an account.
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { register } from "../../api/auth";

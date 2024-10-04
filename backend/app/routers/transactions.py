@@ -1,8 +1,10 @@
+#transactions.py will contain the route for exporting the credit card transactions to a CSV file.
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 import io
 import csv
+
 
 from app.database import get_db
 from app import models
@@ -35,3 +37,5 @@ def export_transactions(db: Session = Depends(get_db)):
 
     output.seek(0)
     return StreamingResponse(output, media_type="text/csv", headers={"Content-Disposition": "attachment; filename=credit_card_transactions.csv"})
+
+

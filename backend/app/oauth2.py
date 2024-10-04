@@ -1,3 +1,4 @@
+#auth2.py is where we define the OAuth2 security scheme and the function to create a new JWT access token.
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer

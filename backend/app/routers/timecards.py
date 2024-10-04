@@ -1,3 +1,4 @@
+#timecards.py  will contain the routes for creating time reports for mechanics and daily time reports.
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas, models

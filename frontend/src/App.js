@@ -1,3 +1,4 @@
+//App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -12,6 +13,7 @@ import EmployeeSchedule from "./components/Schedule/EmployeeSchedule";
 import ReceiptUpload from "./components/ReceiptUpload/ReceiptUpload";
 import MechanicDashboard from "./components/Dashboard/MechanicDashboard";
 import GeneralDashboard from "./components/Dashboard/GeneralDashboard";
+import BulkReceiptUpload from "./components/BulkReceiptUpload";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -37,6 +39,7 @@ function App() {
         />
         <Route path="/schedule/:empCode" element={<EmployeeSchedule />} />
         <Route path="/upload-receipt" element={<ReceiptUpload />} />
+        <Route path="/bulk-receipt-upload" element={<BulkReceiptUpload />} />
       </Routes>
     </Router>
   );

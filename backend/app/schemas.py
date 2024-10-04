@@ -1,3 +1,4 @@
+# schemas.py is where we define Pydantic models for request and response bodies. Pydantic models are used to validate and serialize data in FastAPI applications. In this file, we define Pydantic models for user authentication, timecards, equipment, and other resources.
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
@@ -233,6 +234,8 @@ class CreditCardTransactionSchema(BaseModel):
     coding: Optional[str]  # Include the coding field
     employee_coding: Optional[str]  # Include the employee_coding field
     image_path: Optional[str]  # Mark image_path as Optional
+    bulk_upload_id: Optional[int]
+    
 
     class Config:
         orm_mode = True
@@ -248,6 +251,37 @@ class ReceiptSchema(BaseModel):
     coding: Optional[str] = None
     employee_coding: Optional[str] = None
     image_path: Optional[str] = None
+    bulk_upload_id: Optional[int]
 
     class Config:
         orm_mode = True
+
+class BulkReceiptUploadBase(BaseModel):
+    file_name: str
+
+class BulkReceiptUploadCreate(BulkReceiptUploadBase):
+    pass
+
+class BulkReceiptUpload(BulkReceiptUploadBase):
+    id: int
+    admin_user_id: int
+    upload_date: datetime
+    status: str
+    total_receipts: Optional[int]
+    matched_receipts: Optional[int]
+    unmatched_receipts: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+class BulkReceiptUploadResult(BaseModel):
+    upload_id: int
+    status: str
+    total_receipts: int
+    matched_receipts: int
+    unmatched_receipts: int
+
+class BulkReceiptUploadStatus(BaseModel):
+    upload_id: int
+    status: str
+    progress: float  # Percentage of completion

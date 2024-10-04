@@ -1,3 +1,4 @@
+//LandingPage.js is a component that serves as the landing page for the application. It displays the company logo, name, and links to the registration and login pages. The component is a simple introduction to the application and provides users with easy access to the registration and login functionality.
 import React from "react";
 import { Link } from "react-router-dom";
 import "./LandingPage.css"; // We'll define the styles here

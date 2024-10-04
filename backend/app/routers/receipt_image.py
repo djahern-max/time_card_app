@@ -1,3 +1,4 @@
+# receipt_image.py is a FastAPI router that handles requests related to receipt images.
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session

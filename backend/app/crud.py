@@ -1,3 +1,4 @@
+#crud.py is where we define all the functions that interact with the database.
 from sqlalchemy.orm import Session
 from app import models, schemas
 

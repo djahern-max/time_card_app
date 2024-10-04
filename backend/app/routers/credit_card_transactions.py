@@ -1,3 +1,4 @@
+# credit_card_transactions.py is a FastAPI router that handles requests related to credit card transactions.
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas, models
