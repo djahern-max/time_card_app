@@ -1,4 +1,4 @@
-# credit_card_transactions.py is a FastAPI router that handles requests related to credit card transactions.
+# credit_card_transactions.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas, models
@@ -23,7 +23,8 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
                     c.description,
                     c.coding,
                     c.employee_coding,
-                    c.image_path
+                    c.image_path,
+                    c.bulk_upload_id
                 FROM
                     credit_card_transactions c
                 ORDER BY
@@ -38,11 +39,12 @@ def get_credit_card_transactions(db: Session = Depends(get_db)):
                 "date": row.date.strftime("%Y-%m-%d"),
                 "emp_code": row.emp_code,
                 "card_last_four": row.card_last_four,
-                "amount": row.amount,
+                "amount": float(row.amount),  # Convert Decimal to float
                 "description": row.description,
                 "coding": row.coding,
-                "employee_coding": row.employee_coding or None,  # Handle missing employee_coding
-                "image_path": row.image_path or None  # Handle missing image_path
+                "employee_coding": row.employee_coding or None,
+                "image_path": row.image_path or None,
+                "bulk_upload_id": row.bulk_upload_id  # Add this line
             }
             for row in transactions
         ]

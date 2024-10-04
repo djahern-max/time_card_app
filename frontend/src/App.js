@@ -13,7 +13,7 @@ import EmployeeSchedule from "./components/Schedule/EmployeeSchedule";
 import ReceiptUpload from "./components/ReceiptUpload/ReceiptUpload";
 import MechanicDashboard from "./components/Dashboard/MechanicDashboard";
 import GeneralDashboard from "./components/Dashboard/GeneralDashboard";
-import BulkReceiptUpload from "./components/BulkReceiptUpload";
+import BulkReceiptUpload from "./components/ReceiptUpload/BulkReceiptUpload";
 
 function App() {
   const role = localStorage.getItem("role");

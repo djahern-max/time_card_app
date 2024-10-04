@@ -122,19 +122,18 @@ class CreditCardTransaction(Base):
     __tablename__ = "credit_card_transactions"
 
     id = Column(Integer, primary_key=True, index=True)
-    emp_code = Column(String(10), nullable=False)
-    card_last_four = Column(String(4), nullable=False)
+    emp_code = Column(String, nullable=False)
+    card_last_four = Column(String, nullable=False)
     statement_date = Column(Date, nullable=False)
     transaction_date = Column(Date, nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-    description = Column(Text, nullable=True)
-    coding = Column(Text, nullable=True)  # Admin coding
-    employee_coding = Column(Text, nullable=True)  # Employee coding
-    image_path = Column(String, nullable=True)  # Path to the receipt image
+    amount = Column(Numeric, nullable=False)
+    description = Column(String, nullable=True)
+    coding = Column(String, nullable=True)
+    employee_coding = Column(String, nullable=True)
+    image_path = Column(String, nullable=True)
     bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"), nullable=True)
-    bulk_upload = relationship("BulkReceiptUpload")
 
-    receipts = relationship("Receipt", back_populates="transaction")
+    bulk_upload = relationship("BulkReceiptUpload", back_populates="transactions")
 
 
 class Receipt(Base):
