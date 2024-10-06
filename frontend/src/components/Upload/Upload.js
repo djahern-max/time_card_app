@@ -1,5 +1,3 @@
-//Upload.js is a component that allows users to upload data files to the application. The component provides a file input field for selecting the file to upload and a dropdown menu for selecting the dataset type. When the user clicks the "Upload" button, the file is sent to the backend server for processing. The component displays a success or error message based on the server's response.
-
 import React, { useState } from "react";
 import "./upload.css";
 
@@ -16,6 +14,11 @@ function Upload() {
   };
 
   const handleUpload = async () => {
+    if (!file) {
+      alert("Please select a file first.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
 
@@ -30,6 +33,8 @@ function Upload() {
       url = `http://127.0.0.1:8000/upload/timecards/?dataset=${dataset}`;
     } else if (dataset === "jobs") {
       url = `http://127.0.0.1:8000/upload/jobs/?dataset=${dataset}`;
+    } else if (dataset === "receipts") {
+      url = `http://127.0.0.1:8000/admin/bulk_upload_receipts`;
     } else {
       alert("Unsupported dataset");
       return;
@@ -39,6 +44,9 @@ function Upload() {
       const response = await fetch(url, {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token for protected routes
+        },
       });
 
       if (response.ok) {
@@ -60,9 +68,15 @@ function Upload() {
           <option value="employees">Employees</option>
           <option value="jobs">Jobs</option>
           <option value="equipment">Equipment</option>
-          <option value="timecards">Timecards</option>{" "}
+          <option value="timecards">Timecards</option>
+          <option value="receipts">Receipts</option>{" "}
+          {/* Added Receipts option */}
         </select>
-        <input type="file" onChange={handleFileChange} />
+        <input
+          type="file"
+          onChange={handleFileChange}
+          accept={dataset === "receipts" ? ".pdf" : "*"} // Restrict to PDFs for receipts
+        />
         <button onClick={handleUpload}>Upload</button>
       </div>
     </div>

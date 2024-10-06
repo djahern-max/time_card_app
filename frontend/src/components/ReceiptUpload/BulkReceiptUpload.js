@@ -32,8 +32,13 @@ function BulkReceiptUpload() {
         }
       );
 
-      setUploadStatus("Upload successful!");
-      setResults(response.data.results);
+      console.log("Server Response:", response.data); // Add this line
+      if (response.data.results) {
+        setUploadStatus("Upload successful!");
+        setResults(response.data.results);
+      } else {
+        setUploadStatus("Unexpected response structure.");
+      }
     } catch (error) {
       console.error("Error uploading file:", error);
       setUploadStatus("Upload failed. Please try again.");

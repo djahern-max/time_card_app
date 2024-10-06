@@ -17,8 +17,8 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
-    role = Column(SQLAEnum(UserRole), default=UserRole.general)
-    emp_code = Column(String) 
+    role = Column(SQLAEnum(UserRole), default=UserRole.general)  # Using enum for roles
+    emp_code = Column(String)
 
     mechanics_time_reports = relationship("MechanicsTimeReport", back_populates="user")
     daily_time_reports = relationship("DailyTimeReport", back_populates="user")
@@ -131,9 +131,14 @@ class CreditCardTransaction(Base):
     coding = Column(String, nullable=True)
     employee_coding = Column(String, nullable=True)
     image_path = Column(String, nullable=True)
-    bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"), nullable=True)
+    bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"))
+
+    # Define the relationship to the Receipt model
+    receipts = relationship("Receipt", back_populates="transaction")
 
     bulk_upload = relationship("BulkReceiptUpload", back_populates="transactions")
+
+
 
 
 class Receipt(Base):
@@ -142,20 +147,17 @@ class Receipt(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     transaction_id = Column(Integer, ForeignKey("credit_card_transactions.id"))
-    emp_code = Column(String(10), nullable=False)  # Adding emp_code
+    emp_code = Column(String(10), nullable=False)
     filename = Column(String, index=True)
     upload_date = Column(DateTime(timezone=True), server_default=func.now())
     text = Column(String)
     coding = Column(String)
     employee_coding = Column(String)
     image_path = Column(String)
-    bulk_upload_id = Column(Integer, ForeignKey("bulk_receipt_uploads.id"), nullable=True)
-    bulk_upload = relationship("BulkReceiptUpload")
-
-
 
     transaction = relationship("CreditCardTransaction", back_populates="receipts")
     user = relationship("User", back_populates="receipts")
+
 
 class BulkReceiptUpload(Base):
     __tablename__ = "bulk_receipt_uploads"
@@ -169,6 +171,10 @@ class BulkReceiptUpload(Base):
     matched_receipts = Column(Integer)
     unmatched_receipts = Column(Integer)
 
+    # Add this relationship if it's supposed to link to transactions
+    transactions = relationship("CreditCardTransaction", back_populates="bulk_upload")
+
     admin_user = relationship("User", back_populates="bulk_uploads")
+
 
 
