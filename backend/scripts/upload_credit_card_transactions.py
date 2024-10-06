@@ -8,7 +8,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Load CSV into a DataFrame
-csv_path = r'C:\Users\dahern\Documents\ScheduleProjectUploads\TO UPLOAD 10.04.2024\StmtClosing20240826_BEMIS1398.csv'
+csv_path = r'C:\Users\dahern\Documents\timecard-app\backend\downloadedStatements\combined_statements.csv'
 df = pd.read_csv(csv_path)
 
 # Clean column names to remove any leading/trailing spaces

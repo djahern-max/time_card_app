@@ -14,19 +14,14 @@ def format_value(value):
         return value
 
 def extract_info_from_filename(filename):
-    print(f"Extracting info from filename: {filename}")  # Debug print
-    # Extract information from filename
     match = re.match(r'StmtClosing(\d{8})_(.+?)(\d{4})\.csv$', filename)
     if match:
         date = match.group(1)
         employee_name = match.group(2).strip()
         card_last_four = match.group(3)
-        # Remove any trailing underscore from the employee name
         employee_name = employee_name.rstrip('_')
-        print(f"Extracted: Date={date}, Name={employee_name}, Card={card_last_four}")  # Debug print
         return employee_name, card_last_four
-    print(f"No match found for filename: {filename}")  # Debug print
-    return '', ''  # Return empty strings if the pattern doesn't match
+    return '', ''
 
 def combine_csv_files(input_folder, output_file):
     csv_files = [f for f in os.listdir(input_folder) if f.endswith('.csv')]
@@ -48,15 +43,17 @@ def combine_csv_files(input_folder, output_file):
                 print(f"Skipping {file}: Incorrect number of columns")
                 continue
             
-            # Extract employee name and card_last_four from filename
             employee_name, card_last_four = extract_info_from_filename(file)
             
-            print(f"Extracted name: {employee_name}, card: {card_last_four}")  # Debug print
-            
             # Combine columns H and I, removing NaN and empty values, formatting numbers
-            df['H'] = df.apply(lambda row: ' '.join(filter(lambda x: x != '' and x.lower() != 'nan', 
+            df['E'] = df.apply(lambda row: ' '.join(filter(lambda x: x != '' and x.lower() != 'nan', 
                                                            [format_value(x) for x in [row['H'], row['I']] if pd.notna(x)])), axis=1)
-            df = df.drop(columns=['I'])
+            
+            # Move column G to F
+            df['F'] = df['G']
+            
+            # Drop unnecessary columns
+            df = df.drop(columns=['G', 'H', 'I', 'J'])
             
             # Add employee name as column 'A'
             df.insert(0, 'A', employee_name)
@@ -74,7 +71,7 @@ def combine_csv_files(input_folder, output_file):
 
     combined_data.to_csv(output_file, index=False)
     print(f"Combined file saved to {output_file}")
-    print(f"First few rows of combined data:\n{combined_data.head()}")  # Debug print
+    print(f"First few rows of combined data:\n{combined_data.head()}")
 
 if __name__ == "__main__":
     input_folder = r"C:\Users\dahern\Documents\timecard-app\backend\downloadedStatements"
