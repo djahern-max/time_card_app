@@ -47,8 +47,8 @@ def combine_csv_files(input_folder, output_file):
             df['description'] = df.iloc[:, 4]       # Column E for description
             
             # Combine F and G into a single 'amount' column
-            df['amount'] = df.apply(lambda row: format_value(row[5]) if pd.notna(row[5]) and row[5] != '' 
-                                    else -1 * float(format_value(row[6])), axis=1)
+            df['amount'] = df.apply(lambda row: -float(format_value(row[5])) if pd.notna(row[5]) and row[5] != '' 
+                                    else float(format_value(row[6])), axis=1)
 
             # Create the final dataframe with selected columns
             df = df[['transaction_date', 'amount', 'description']]
